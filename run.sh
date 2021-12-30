@@ -25,6 +25,7 @@ cp -r config-files/* ~/.config/
 
 # Download mpris indicator for polybar
 wget https://raw.githubusercontent.com/polybar/polybar-scripts/master/polybar-scripts/player-mpris-tail/player-mpris-tail.py
+chmod +x player-mpris-tail.py
 mv player-mpris-tail.py ~/.config/polybar/polybar-scripts/
 
 # Install Nerd Font
@@ -41,7 +42,7 @@ cp .Xresources ~
 cp .Xnord ~
 
 # Installing rtl8821ce driver, in case
-sudo apt install bc module-assistant build-essentials dkms
+sudo apt install bc module-assistant build-essential dkms
 git clone https://github.com/tomaspinho/rtl8821ce
 cd rtl8821ce
 sudo ./dkms-install.sh
@@ -50,4 +51,4 @@ sudo ./dkms-install.sh
 # it needs to be the last, because for some reason it makes already connected network unreachable
 sudo apt install network-manager
 
-echo -e"\n\n\n==============[ NOW RESTART YOUR COMPUTER ]==============="
+echo -e "\n\n\n==============[ NOW RESTART YOUR COMPUTER ]==============="
