@@ -36,8 +36,12 @@ ctrl + alt + Delete
 super + alt + {q,r}
 	bspc {quit,wm -r}
 
-# close and kill
+# close
 super + q
+    bspc node -c
+
+# close and kill
+super + shift + q
 	bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
@@ -149,3 +153,13 @@ XF86MonBrightnessUp
     brightnessctl s +5%
 XF86MonBrightnessDown
     brightnessctl s 5%-
+
+# playerctl shortcut
+ctrl + F1
+    playerctl play-pause
+ctrl + F2
+    playerctl previous
+ctrl + F3
+    playerctl next
+ctrl + F4
+    playerctl stop

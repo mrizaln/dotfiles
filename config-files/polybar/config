@@ -76,9 +76,14 @@ font-3 = JetBrains Mono Nerd Font Mono:style=Regular:size=15;4
 font-4 = Font Awesome 5 Free Solid:size=12;4
 font-5 = Noto Color Emoji:scale=13;4
 
-modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left pulseaudio sep player-mpris-tail right sep left eth wlan right
+modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left pulseaudio void pulseaudio-microphone void player-mpris-tail right
 modules-center = xwindow
-modules-right = left battery backlight bluetooth vpn dunst right sep left time date right sep powermenu
+modules-right = left eth wlan void battery backlight bluetooth vpn dunst right sep left time date right sep powermenu
+
+tray-position = right
+tray-padding = 0
+tray-scale = 1
+tray-max-size = 6
 
 override-redirect = true
 wm-restack = bspwm
@@ -156,7 +161,7 @@ type = internal/bspwm
 format = <label-state>
 pin-workspaces = false
 enable-scroll = true
-label-separator = "   "
+label-separator = " "
 label-separator-background = ${colors.shade16}
 
 label-focused-overline = ${colors.background}
@@ -292,7 +297,7 @@ label-empty = "Hello There"
 format = <label>
 format-prefix = " "
 format-prefix-foreground = ${colors.shade14}
-format-foreground = ${colors.shade14}
+format-foreground = ${colors.shade7}
 ;format-background = ${colors.shade16}
 format-overline = ${colors.background}
 format-underline = ${colors.background}
@@ -306,18 +311,6 @@ format-foreground = ${colors.shade5}
 format-background = ${colors.shade16}
 format-overline = ${colors.background}
 format-underline = ${colors.background}
-
-[module/vpn]
-type = custom/ipc
-initial = 2
-format-foreground = ${colors.shade5}
-format-background = ${colors.shade16}
-format-overline = ${colors.background}
-
-format-underline = ${colors.background}
-
-hook-0 = echo "%{A1:sudo pkill openconnect && polybar-msg hook vpn 2:}%{F#a3be8c} %{F-}%{A}" &
-hook-1 = echo "%{A1:pass sshthanos | sudo openconnect vpn.som.umaryland.edu -b -q --user=cullen.ross --authgroup SOM-Multifactor --passwd-on-stdin --servercert pin-sha256\:zWuWUmGaQEWraG+Xvv6uF58rrupSRmqCzeNioSDEaaI= && polybar-msg hook vpn 1:}%{F#3b4252} %{F-}%{A}" &
 
 [module/dunst]
 type = custom/ipc
@@ -355,7 +348,7 @@ format-volume = <ramp-volume><label-volume>
 format-volume-background = ${colors.shade16}
 ;label-volume-padding-left = 1
 label-volume = %percentage%%
-label-volume-foreground = ${colors.shade6}
+label-volume-foreground = ${colors.shade2}
 label-volume-background = ${colors.shade16}
 
 format-volume-overline = ${colors.background}
@@ -370,7 +363,7 @@ label-muted-underline = ${colors.background}
 
 label-muted =  Muted
 label-muted-background = ${colors.shade16}
-label-muted-foreground = ${colors.shade6}
+label-muted-foreground = ${colors.shade2}
 ;label-muted-padding = 1
 
 click-right = pavucontrol
@@ -395,7 +388,7 @@ bar-volume-empty-background = ${colors.shade16}
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-ramp-volume-foreground = ${colors.shade6}
+ramp-volume-foreground = ${colors.shade2}
 ramp-volume-background = ${colors.shade16}
 ramp-volume-padding-right = 1
 
@@ -554,7 +547,7 @@ interval = 3.0
 format-connected-prefix = " "
 format-connected-background = ${colors.shade16}
 ;format-connected-padding = 1
-format-connected-prefix-foreground = ${colors.shade5}
+format-connected-prefix-foreground = ${colors.shade3}
 label-connected = %{A1:setsid -f connman-gtk:}ETH%{A}
 
 label-connected-overline = ${colors.background}
@@ -578,7 +571,7 @@ format-connected-background = ${colors.shade16}
 format-connected = <ramp-signal> <label-connected>
 ;format-connected-padding-left = 1
 label-connected = %{A1:setsid -f connman-gtk:}%essid%%{A}
-label-connected-foreground = ${colors.shade5}
+label-connected-foreground = ${colors.shade3}
 
 label-connected-overline = ${colors.background}
 label-disconnected-overline = ${colors.background}
@@ -600,7 +593,7 @@ ramp-signal-1 = 
 ramp-signal-2 = 
 ramp-signal-3 = 
 ramp-signal-4 = 
-ramp-signal-foreground = ${colors.shade5}
+ramp-signal-foreground = ${colors.shade3}
 
 [module/date]
 type = internal/date
@@ -629,8 +622,8 @@ time = "%R:%S  "
 ;time-alt = "%A, %B %d %Y"
 format = <label>
 format-background = ${colors.shade16}
-format-prefix-foreground = ${colors.shade2}
-format-foreground = ${colors.shade2}
+format-prefix-foreground = ${colors.shade6}
+format-foreground = ${colors.shade6}
 format-prefix = " "
 ;format-padding = 1
 
@@ -650,8 +643,25 @@ content = "⏻"
 
 [module/player-mpris-tail]
 type = custom/script
-exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f '{icon} {title}'
+exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f ' [{title}]'
 tail = true
-click-left = ~/polybar-scripts/player-mpris-tail.py previous &
-click-right = ~/polybar-scripts/player-mpris-tail.py next &
-click-middle = ~/polybar-scripts/player-mpris-tail.py play-pause &
+click-left = playerctl previous &
+click-right = plyerctl next &
+click-middle = playerctl play-pause &
+content-overline = ${colors.background}
+content-underline = ${colors.background}
+format-background = ${colors.shade16}
+format-foreground = ${colors.shade3}
+label-maxlen = 30
+
+[module/pulseaudio-microphone]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh
+tail = true
+click-left = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --toggle &
+scroll-up = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --increase &
+scroll-down = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --decrease &
+format-prefix = "🎙"
+format-prefix-foreground = ${colors.shade2}
+format-foreground = ${colors.shade2}
+format-background = ${colors.shade16}

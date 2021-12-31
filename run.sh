@@ -25,8 +25,9 @@ cp -r config-files/* ~/.config/
 
 # Download mpris indicator for polybar
 wget https://raw.githubusercontent.com/polybar/polybar-scripts/master/polybar-scripts/player-mpris-tail/player-mpris-tail.py
-chmod +x player-mpris-tail.py
-mv player-mpris-tail.py ~/.config/polybar/polybar-scripts/
+wget https://raw.githubusercontent.com/polybar/polybar-scripts/master/polybar-scripts/pulseaudio-microphone/pulseaudio-microphone.sh
+chmod +x player-mpris-tail.py pulseaudio-microphone.sh
+mv player-mpris-tail.py pulseaudio-microphone.sh ~/.config/polybar/polybar-scripts/
 
 # Install Nerd Font
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
