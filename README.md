@@ -6,4 +6,4 @@ Using [bspwm](https://github.com/baskerville/bspwm) as window manager, [sxhkd](h
 
 This script was inspired by [this](https://github.com/christitustech/debian-titus).
 
-![preview](https://github.com/mrizaln/custom-desktop/screenshot/2022-01-01_02-27.png)
+![preview](screenshot/2022-01-01_02-27.png)
