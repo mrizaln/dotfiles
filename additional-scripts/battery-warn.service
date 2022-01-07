@@ -1,0 +1,10 @@
+# put this in ~/.config/systemd/user/battery-warn.service
+# and adjust the line in exec-start
+
+[Unit]
+Description=Battery warning
+
+[Service]
+Type=oneshot
+Environment="DISPLAY=:0" "XAUTHORITY=/home/mrizaln/.Xauthority"
+ExecStart=/home/mrizaln/.config/systemd/scripts/battery.sh

@@ -8,5 +8,3 @@ config-files/*
 !config-files/rofi/
 !config-files/sxhkd/
 !config-files/picom.conf
-
-mount-subtree.sh

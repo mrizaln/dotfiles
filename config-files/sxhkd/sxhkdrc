@@ -15,7 +15,7 @@ super + Escape
 	pkill -USR1 -x sxhkd
 
 # My program Hotkeys
-super + b
+super + shift + b
 	firefox
 
 Print 
@@ -147,12 +147,20 @@ XF86AudioRaiseVolume
 	amixer set Master 5%+
 XF86AudioMute
     amixer set Master toggle
+shift + XF86AudioLowerVolume
+    amixer set Master 10%-
+shift + XF86AudioRaiseVolume
+    amixer set Master 10%+
 
 # brightness control
 XF86MonBrightnessUp
-    brightnessctl s +5%
+    brightnessctl -e s +5%
 XF86MonBrightnessDown
-    brightnessctl s 5%-
+    brightnessctl -e s 5%-
+shift + XF86MonBrightnessUp
+    brightnessctl -e s +10%
+shift + XF86MonBrightnessDown
+    brightnessctl -e s 10%-
 
 # playerctl shortcut
 ctrl + F1

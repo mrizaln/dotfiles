@@ -23,11 +23,16 @@ mkdir -p ~/.themes ~/.fonts ~/.config
 # Copy user configuration files
 cp -r config-files/* ~/.config/
 
+# Low Battery Warn Service
+mkdir -p ~/.config/systemd/{user,scripts}
+cp additional-scripts/battery-warn.* ~/.config/systemd/user/
+cp additional-scripts/battery.sh ~/.config/systemd/scripts/
+
 # Download mpris indicator for polybar
-wget https://raw.githubusercontent.com/polybar/polybar-scripts/master/polybar-scripts/player-mpris-tail/player-mpris-tail.py
-wget https://raw.githubusercontent.com/polybar/polybar-scripts/master/polybar-scripts/pulseaudio-microphone/pulseaudio-microphone.sh
-chmod +x player-mpris-tail.py pulseaudio-microphone.sh
-mv player-mpris-tail.py pulseaudio-microphone.sh ~/.config/polybar/polybar-scripts/
+#wget https://raw.githubusercontent.com/polybar/polybar-scripts/master/polybar-scripts/player-mpris-tail/player-mpris-tail.py
+#wget https://raw.githubusercontent.com/polybar/polybar-scripts/master/polybar-scripts/pulseaudio-microphone/pulseaudio-microphone.sh
+#chmod +x player-mpris-tail.py pulseaudio-microphone.sh
+#mv player-mpris-tail.py pulseaudio-microphone.sh ~/.config/polybar/polybar-scripts/
 
 # Install Nerd Font
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
@@ -38,7 +43,7 @@ wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsM
 unzip JetBrainsMono.zip -d ~/.fonts/
 fc-cache -vf
 
-# lxapearance
+# X appearance
 cp .Xresources ~
 cp .Xnord ~
 

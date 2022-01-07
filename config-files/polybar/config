@@ -75,10 +75,11 @@ font-2 = Font Awesome 5 Free Solid:size=11;4
 font-3 = JetBrains Mono Nerd Font Mono:style=Regular:size=15;4
 font-4 = Font Awesome 5 Free Solid:size=12;4
 font-5 = Noto Color Emoji:scale=13;4
+font-6 = Noto Sans CJK JP:size=11;4
 
-modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left pulseaudio void pulseaudio-microphone void player-mpris-tail right
+modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left pulseaudio void pipewire-microphone void player-mpris-tail right
 modules-center = xwindow
-modules-right = left eth wlan void battery backlight bluetooth vpn dunst right sep left time date right sep powermenu
+modules-right = left eth wlan usb-tethering void battery backlight bluetooth vpn dunst right sep left time date right sep powermenu
 
 tray-position = right
 tray-padding = 0
@@ -645,14 +646,14 @@ content = "⏻"
 type = custom/script
 exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f ' [{title}]'
 tail = true
-click-left = playerctl previous &
-click-right = plyerctl next &
-click-middle = playerctl play-pause &
+click-left = playerctl play-pause &
+click-right = playerctl next &
+click-middle = playerctl previous &
 content-overline = ${colors.background}
 content-underline = ${colors.background}
 format-background = ${colors.shade16}
 format-foreground = ${colors.shade3}
-label-maxlen = 30
+label-maxlen = 25
 
 [module/pulseaudio-microphone]
 type = custom/script
@@ -661,7 +662,44 @@ tail = true
 click-left = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --toggle &
 scroll-up = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --increase &
 scroll-down = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --decrease &
+format-label-font = 6
 format-prefix = "🎙"
 format-prefix-foreground = ${colors.shade2}
 format-foreground = ${colors.shade2}
 format-background = ${colors.shade16}
+
+[module/pipewire-microphone]
+type = custom/script
+exec = $HOME/.config/polybar/polybar-scripts/pipewire-microphone.sh
+tail = true
+click-left = $HOME/.config/polybar/polybar-scripts/polybar-scripts/pipewire-microphone/pipewire-microphone.sh --toggle &
+format-label-font = 6
+format-prefix = "🎙"
+format-prefix-foreground = ${colors.shade2}
+format-foreground = ${colors.shade2}
+format-background = ${colors.shade16}
+
+[module/usb-tethering]
+type = internal/network
+interface = usb0
+interval = 3.0
+
+;format-connected-underline = ${xrdb:color2}
+format-connected-prefix = " "
+format-connected-background = ${colors.shade16}
+;format-connected-padding = 1
+format-connected-prefix-foreground = ${colors.shade3}
+label-connected = 
+;label-connected = %{A1:setsid -f connman-gtk:}ETH%{A}
+
+label-connected-overline = ${colors.background}
+label-disconnected-overline = ${colors.background}
+label-connected-underline = ${colors.background}
+label-disconnected-underline = ${colors.background}
+
+format-connected-overline = ${colors.background}
+format-disconnected-overline = ${colors.background}
+format-connected-underline = ${colors.background}
+format-disconnected-underline = ${colors.background}
+
+format-disconnected =

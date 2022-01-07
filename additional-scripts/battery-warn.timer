@@ -1,0 +1,14 @@
+# put this in ~/.config/systemd/user/battery-warn.timer
+# then enable the timer with 
+# systemctl --user enable battery-warn.timer
+
+[Unit]
+Description=Battery warning timer
+
+[Timer]
+OnCalendar=minutely
+Persistent=true
+Unit=battery-warn.service
+
+[Install]
+WantedBy=timers.target
