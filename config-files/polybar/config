@@ -69,17 +69,17 @@ padding-right = 1
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = Ubuntu Condensed:style=Regular:size=12;3
+font-0 = Ubuntu Condensed:style=Regular:size=11;3
 font-1 = Font Awesome 5 Brands:size=11;4
 font-2 = Font Awesome 5 Free Solid:size=11;4
-font-3 = JetBrains Mono Nerd Font Mono:style=Regular:size=15;4
+font-3 = JetBrains Mono Nerd Font Mono:style=Regular:size=14;4
 font-4 = Font Awesome 5 Free Solid:size=12;4
-font-5 = Noto Color Emoji:scale=13;4
-font-6 = Noto Sans CJK JP:size=11;4
+font-5 = Noto Color Emoji:scale=12;4
+font-6 = Noto Sans Mono CJK JP:size=9;4
 
-modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left pulseaudio void pipewire-microphone void player-mpris-tail right
+modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left mem-usage void pulseaudio void pipewire-microphone void player-mpris-tail right
 modules-center = xwindow
-modules-right = left eth wlan usb-tethering void battery backlight bluetooth vpn dunst right sep left time date right sep powermenu
+modules-right = left eth wlan usb-tethering void battery backlight bluetooth dunst right sep left time date right sep powermenu
 
 tray-position = right
 tray-padding = 0
@@ -100,7 +100,7 @@ pseudo-transparency = true
 [bar/tray]
 ;monitor = DP-4
 width = 1%
-height = 26
+height = 27
 offset-x = 95%
 offset-y = 5%
 bottom = true
@@ -644,16 +644,18 @@ content = "⏻"
 
 [module/player-mpris-tail]
 type = custom/script
-exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f ' [{title}]'
+exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f '[{title}]'
+;exec = ~/.config/polybar/polybar-scripts/rotate.sh 20
 tail = true
 click-left = playerctl play-pause &
 click-right = playerctl next &
 click-middle = playerctl previous &
+format-label-font = 6
 content-overline = ${colors.background}
 content-underline = ${colors.background}
 format-background = ${colors.shade16}
 format-foreground = ${colors.shade3}
-label-maxlen = 25
+label-maxlen = 20
 
 [module/pulseaudio-microphone]
 type = custom/script
@@ -662,7 +664,6 @@ tail = true
 click-left = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --toggle &
 scroll-up = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --increase &
 scroll-down = ~/.config/polybar/polybar-scripts/pulseaudio-microphone.sh --decrease &
-format-label-font = 6
 format-prefix = "🎙"
 format-prefix-foreground = ${colors.shade2}
 format-foreground = ${colors.shade2}
@@ -703,3 +704,13 @@ format-connected-underline = ${colors.background}
 format-disconnected-underline = ${colors.background}
 
 format-disconnected =
+
+[module/mem-usage]
+type = custom/script
+exec = $HOME/.config/polybar/polybar-scripts/mem-usage.sh
+tail = true
+poll-interval = 1
+format-foreground = ${colors.shade3}
+format-background = ${colors.shade16}
+format-overline = ${colors.background}
+format-underline = ${colors.background}
