@@ -1,0 +1,11 @@
+[Unit]
+Description=Data partition mount
+
+[Mount]
+What=/dev/disk/by-uuid/46B691EEB691DF2D
+Where=/mnt/46B691EEB691DF2D
+Type=ntfs
+Options=defaults
+
+[Install]
+WantedBy=multi-user.target
