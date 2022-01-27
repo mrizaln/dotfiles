@@ -47,14 +47,17 @@ bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
 
 #Application Rules
 bspc rule -a Gimp desktop='^8' follow=on
+bspc rule -a Gimp-2.10 desktop='^8' follow=on
 bspc rule -a wine desktop='^7' state=floating follow=on
 bspc rule -a variety state=floating
 bspc rule -a Firefox-esr desktop='^1'
 bspc rule -a mpv state=floating
-bspc rule -a code dekstop='^4'
+bspc rule -a Code dekstop='^4'
+bspc rule -a Sublime_text desktop='^4'
 bspc rule -a feh state=floating
-bspc rule -a pavucontrol state=floating follow=on
-bspc rule -a zoom state=floating
+bspc rule -a Pavucontrol state=floating
+bspc rule -a zoom state=floating desktop='^7'
+bspc rule -a Tk state=floating
 #bspc rule -a Kupfer.py focus=on
 #bspc rule -a Screenkey manage=off
 #bspc rule -a Discord desktop='^6'
@@ -66,7 +69,7 @@ sleep 0.50
 bash ~/.config/polybar/launch.sh &
 lxpolkit &
 picom --config "$HOME/.config/bspwm/picom.conf" &
-variety &
+#variety &
 flameshot &
 sleep 0.5
 #pingresult=$(ping -c 1 1.1.1.1 > /dev/null ; echo $?)
@@ -76,6 +79,7 @@ sleep 0.5
 
 # Extra Files for mrizaln
 sct 5000 &
+feh --bg-fill ~/.config/bspwm/current_wallpaper &
 bspc desktop -f ^5
 kitty &
 kitty htop &
