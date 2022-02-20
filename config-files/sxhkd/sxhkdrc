@@ -142,21 +142,25 @@ super + {Left,Down,Up,Right}
 	
 # volume control
 XF86AudioLowerVolume
-	amixer set Master 5%-
+	amixer set Master 2%-
 XF86AudioRaiseVolume
-	amixer set Master 5%+
+	amixer set Master 2%+
 XF86AudioMute
     amixer set Master toggle
 shift + XF86AudioLowerVolume
-    amixer set Master 10%-
+    amixer set Master 5%-
 shift + XF86AudioRaiseVolume
-    amixer set Master 10%+
+    amixer set Master 5%+
 
 # brightness control
 XF86MonBrightnessUp
     brightnessctl -e s +5%
 XF86MonBrightnessDown
     brightnessctl -e s 5%-
+alt + XF86MonBrightnessUp
+    brightnessctl -e s +2%
+alt + XF86MonBrightnessDown
+    brightnessctl -e s 2%-
 shift + XF86MonBrightnessUp
     brightnessctl -e s +10%
 shift + XF86MonBrightnessDown
@@ -171,3 +175,15 @@ ctrl + F3
     playerctl next
 ctrl + F4
     playerctl stop
+
+# bring up time table
+ctrl + alt + v
+    bash ~/.config/rofi/timetable/today.sh
+
+# bring up my schedule
+ctrl + shift + alt + v
+    bash my_schedule.sh
+
+# pause dunst
+#ctrl + alt + Escape
+#    dunstctl set-paused toggle

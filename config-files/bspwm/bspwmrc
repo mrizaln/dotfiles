@@ -54,10 +54,14 @@ bspc rule -a Firefox-esr desktop='^1'
 bspc rule -a mpv state=floating
 bspc rule -a Code dekstop='^4'
 bspc rule -a Sublime_text desktop='^4'
+bspc rule -a libreoffice desktop='^3'
 bspc rule -a feh state=floating
-bspc rule -a Pavucontrol state=floating
+bspc rule -a Pavucontrol state=floating desktop='^10' follow=on
 bspc rule -a zoom state=floating desktop='^7'
 bspc rule -a Tk state=floating
+bspc rule -a gnuplot_qt state=floating
+bspc rule -a Yad state=floating
+bspc rule -a LearnOpenGL state=floating
 #bspc rule -a Kupfer.py focus=on
 #bspc rule -a Screenkey manage=off
 #bspc rule -a Discord desktop='^6'
@@ -68,7 +72,7 @@ sleep 0.50
 # urxvtc &   # i don't use urxvt
 bash ~/.config/polybar/launch.sh &
 lxpolkit &
-picom --config "$HOME/.config/bspwm/picom.conf" &
+picom --config "$HOME/.config/picom.conf" &
 #variety &
 flameshot &
 sleep 0.5
@@ -78,6 +82,8 @@ sleep 0.5
 #done
 
 # Extra Files for mrizaln
+brightnessctl -r &
+brightnessctl -s &
 sct 5000 &
 feh --bg-fill ~/.config/bspwm/current_wallpaper &
 bspc desktop -f ^5

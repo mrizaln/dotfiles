@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 color0="#A3BE8C"    #green
 color1="#EBCB8B"    #yellow
@@ -19,7 +19,7 @@ color="$color0"
         color="$color0"
     elif [ $percentage -le 37 ]; then
         percentage="▃ $percentage%"
-        color="$color1"
+        color="$color0"
     elif [ $percentage -le 50 ]; then
         percentage="▄ $percentage%"
         color="$color1"

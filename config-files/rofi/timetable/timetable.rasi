@@ -9,7 +9,7 @@ configuration {
     display-drun:			"Apps";
     drun-display-format:		"{name}";
     scroll-method:			0;
-    disable-history:			false;
+    disable-history:			true;
     sidebar-mode:			false;
 }
 
@@ -18,10 +18,14 @@ configuration {
 window {
     background-color: @background;
     border:           0;
-    padding:          30;
+    padding:          10;
+    location:         northeast;
+    width:            350;
+    height:           150;
+    y-offset:         27;
 }
 listview {
-    lines:                          5;
+    lines:                          4;
     columns:                        3;
 }
 mainbox {
@@ -40,7 +44,7 @@ listview {
     fixed-height: 0;
     border:       8px 0px 0px ;
     border-color: @separatorcolor;
-    spacing:      8px ;
+    spacing:      4px ;
     scrollbar:    false;
     padding:      2px 0px 0px ;
 }

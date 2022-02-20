@@ -5,10 +5,15 @@ BORDER_SIZE=0  # border size from your wm settings
 YAD_WIDTH=222  # 222 is minimum possible value
 YAD_HEIGHT=150 # 193 is minimum possible value
 DATE="$(date +"%I:%M %p")"
+CALENDAR_FILE="$HOME/.config/polybar/polybar-scripts/cal-today-popup-calendar"
+
+strip_excess() {
+        sed 's/^\s*#.*$//g' | sed '/^$/d'
+}
 
 case "$1" in
 --popup)
-    if [ "$(xdotool getwindowfocus getwindowname)" = "yad-calendar" ]; then
+    if [ "$(xdotool getwindowfocus getwindowname)" = "yad-today" ]; then
         exit 0
     fi
 
@@ -31,9 +36,11 @@ case "$1" in
         : $((pos_y = BAR_HEIGHT + BORDER_SIZE))
     fi
 
-    yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons \
+    yad --list \
+        --column="Day" --column="Time" --column="Event" --close-on-unfocus --no-buttons \
+        --sep-value=", " $(cat $CALENDAR_FILE | strip_excess) \
         --width="$YAD_WIDTH" --height="$YAD_HEIGHT" --posx="$pos_x" --posy="$pos_y" \
-        --title="yad-calendar" --borders=0 >/dev/null &
+        --title="yad-today" --borders=0 >/dev/null &
     ;;
 *)
     echo "$DATE"

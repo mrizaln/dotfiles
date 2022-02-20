@@ -616,6 +616,8 @@ format-underline = ${colors.background}
 
 ;label = %date%
 label = %{A1:~/.config/polybar/polybar-scripts/cal-popup.sh --popup &:}%date%%{A}
+click-left = "~/.config/polybar/polybar-scripts/cal-popup.sh --popup &"
+
 
 [module/time]
 type = internal/date
@@ -632,7 +634,7 @@ format-prefix = " "
 format-overline = ${colors.background}
 format-underline = ${colors.background}
 ;label = %{A1:notify-send -a Date -i /usr/share/icons/Nord-Icon/64x64/apps/office-calendar.svg -u normal -t 3000 "$(date "+%A, %B %d %Y")":}%time%%{A}
-label = %{A1:~/.config/rofi/timetable/today.sh &:}%time%%{A}
+label = %{A1:~/.config/polybar/polybar-scripts/cal-popup.sh --popup &:}%time%%{A}
 ;click-left = "~/.config/polybar/polybar-scripts/cal-popup.sh --popup &"
 
 [module/powermenu]
