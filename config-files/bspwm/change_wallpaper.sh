@@ -23,7 +23,7 @@ wallpaper_path=$HOME/.config/bspwm/
 wall=$wallpaper_path/$wallpaper_name
 
 rm $wall
-ln -s "$1" $wall
+cp "$1" $wall
 feh --bg-fill "$1"
 
 exit 0

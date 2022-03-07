@@ -61,7 +61,9 @@ bspc rule -a zoom state=floating desktop='^7'
 bspc rule -a Tk state=floating
 bspc rule -a gnuplot_qt state=floating
 bspc rule -a Yad state=floating
+bspc rule -a Simplescreenrecorder state=floating
 bspc rule -a LearnOpenGL state=floating
+#bspc rule -a Wine state=floating
 #bspc rule -a Kupfer.py focus=on
 #bspc rule -a Screenkey manage=off
 #bspc rule -a Discord desktop='^6'
