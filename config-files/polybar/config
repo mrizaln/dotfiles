@@ -77,7 +77,7 @@ font-4 = Font Awesome 5 Free Solid:size=12;4
 font-5 = Noto Color Emoji:scale=12;4
 font-6 = Noto Sans Mono CJK JP:size=9;4
 
-modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left mem-usage void pulseaudio void pipewire-microphone void player-mpris-tail right
+modules-left = launcher sep left bsplayout bspmode right sep left bspwm right sep left cpu-mem-usage void pulseaudio void player-mpris-tail right
 modules-center = xwindow
 modules-right = left eth wlan vnstat-today void battery backlight bluetooth dunst void time date right sep powermenu
 
@@ -656,7 +656,7 @@ content-overline = ${colors.background}
 content-underline = ${colors.background}
 format-background = ${colors.shade16}
 format-foreground = ${colors.shade2}
-label-maxlen = 20
+label-maxlen = 15
 
 [module/pulseaudio-microphone]
 type = custom/script
@@ -706,6 +706,7 @@ format-disconnected-underline = ${colors.background}
 
 format-disconnected =
 
+
 [module/mem-usage]
 type = custom/script
 exec = $HOME/.config/polybar/polybar-scripts/mem-usage.sh
@@ -719,6 +720,20 @@ format-underline = ${colors.background}
 label = %output%
 
 
+[module/cpu-mem-usage]
+type = custom/script
+exec = $HOME/.config/polybar/polybar-scripts/cpu-mem-usage.sh
+tail = false
+interval = 2
+format-foreground = ${colors.shade7}
+format-background = ${colors.shade16}
+format-overline = ${colors.background}
+format-underline = ${colors.background}
+click-left = $HOME/.config/polybar/polybar-scripts/resource-monitor/who-monopolize-resource-py-wrap.sh cpu
+click-right = $HOME/.config/polybar/polybar-scripts/resource-monitor/who-monopolize-resource-py-wrap.sh mem
+
+label = %output%
+
 
 [module/vnstat-today]
 type = custom/script
@@ -729,4 +744,5 @@ format-foreground = ${colors.shade3}
 format-background = ${colors.shade16}
 format-overline = ${colors.background}
 format-underline = ${colors.background}
-click-left = $HOME/.config/polybar/polybar-scripts/vnstat-daily-usage.sh
+click-right = $HOME/.config/polybar/polybar-scripts/vnstat-daily-usage.sh
+click-left = $HOME/.config/rofi/network-manager/nmcli-action.sh

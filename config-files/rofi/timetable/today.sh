@@ -32,6 +32,7 @@ format_entries() {
                 [[ "$eventdate" != "$todaydate" ]] && continue
 
                 eventtime="$(date --date=$etime +%s)"
+                eventtime=$(( eventtime + 1800))        # add 30 minutes of delay
                 hhmm="$(date --date=$etime +%H:%M)"
 
                 if [[ $eventtime -lt $currenttime ]]; then
