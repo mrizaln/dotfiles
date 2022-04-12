@@ -20,7 +20,7 @@ window {
     border:           0;
     padding:          10;
     location:         northwest;
-    width:            300;
+    width:            340;
     height:           170;
     y-offset:         27;
     x-offset:         200;

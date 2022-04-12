@@ -9,6 +9,8 @@ super + x
 
 # program launcher
 super + r
+    rofi -show run
+super + shift + r
 	rofi -show drun
 
 
@@ -236,3 +238,12 @@ ctrl + shift + alt + v
 # pause dunst
 #ctrl + alt + Escape
 #    dunstctl set-paused toggle
+
+
+# pulseaudio control
+ctrl + shift + F1
+    pavucontrol
+
+# show windows
+super + a
+    rofi -show window
