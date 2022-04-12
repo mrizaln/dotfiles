@@ -1,21 +1,21 @@
-#!/bin/bash
+#!/bin/env bash
 
-# Add custom Titus rofi deb package
+# Install rofi deb package
 sudo dpkg -i 'others/rofi_1.7.0-1_amd64.deb'
 
 # Update routine
 sudo apt update; sudo apt upgrade; sudo apt autoremove;
 
 # Install necessary packages
-sudo apt install unzip bspwm polybar rofi picom sddm kitty thunar flameshot neofetch sxhkd dunst git lxpolkit lxappearance xorg htop sct brightnessctl alsa-utils pulseaudio pavucontrol variety libglib2.0-0 libglib2.0-bin feh mpv net-tools papirus-icon-theme fonts-noto-color-emoji fonts-noto-cjk fonts-firacode fonts-font-awesome fonts-ubuntu fonts-cantarell fonts-fantasque-sans libqt5svg5 qml-module-qtquick-controls openssh-client openssh-server ttf-mscorefonts-installer
+sudo apt install python3 unzip bspwm polybar rofi picom sddm kitty thunar flameshot neofetch sxhkd dunst git lxpolkit lxappearance xorg htop sct brightnessctl alsa-utils pulseaudio pavucontrol variety libglib2.0-0 libglib2.0-bin feh mpv net-tools papirus-icon-theme fonts-noto-color-emoji fonts-noto-cjk fonts-firacode fonts-font-awesome fonts-ubuntu fonts-cantarell fonts-fantasque-sans libqt5svg5 qml-module-qtquick-controls openssh-client openssh-server ttf-mscorefonts-installer
 
 # Download Nordic Theme
 git clone https://github.com/EliverLara/Nordic.git
 sudo cp -r Nordic /usr/share/themes/
 
 # Copy input device configurations
-sudo cp etc_X11_xorg.conf.d/* /etc/X11/xorg.conf.d/
-#sudo cp usr_share_X11_xorg.conf.d/* /usr/share/X11/xorg.conf.d/
+sudo cp additional-config-files/etc_X11_xorg.conf.d/* /etc/X11/xorg.conf.d/
+#sudo cp additional-config-files/usr_share_X11_xorg.conf.d/* /usr/share/X11/xorg.conf.d/
 
 # Make theme folders
 mkdir -p ~/.themes ~/.fonts ~/.config
@@ -23,7 +23,7 @@ mkdir -p ~/.themes ~/.fonts ~/.config
 # Copy user configuration files
 cp -r config-files/* ~/.config/
 
-# Data Partition Mount Service
+# Data Partition Mount Service (assuming using systemd)
 if [ $USER == mrizaln ]; then
     sudo cp others/mnt-46B691EEB691DF2D.mount /etc/systemd/system/
     sudo systemctl enable mnt-46B691EEB691DF2D.mount
@@ -50,15 +50,17 @@ unzip JetBrainsMono.zip -d ~/.fonts/
 fc-cache -vf
 
 # X appearance
-sed "s/mrizaln/$USER/" -i .Xresources
+sed "s/mrizaln/$USER/" -i .Xresources       # if username is not mrizaln, replace it with $USER
 cp .Xresources ~
 cp .Xnord ~
 
-# Installing rtl8821ce driver, in case
-sudo apt install bc module-assistant build-essential dkms
-git clone https://github.com/tomaspinho/rtl8821ce
-cd rtl8821ce
-sudo ./dkms-install.sh
+# Installing rtl8821ce driver, just in case
+if [[ "$(lspci | grep -i rtl8821ce | wc -l)" == 1 ]]; then
+    sudo apt install bc module-assistant build-essential dkms
+    git clone https://github.com/tomaspinho/rtl8821ce
+    cd rtl8821ce
+    sudo ./dkms-install.sh
+fi
 
 # Installing network-manager package
 # it needs to be the last, because for some reason it makes already connected network unreachable
