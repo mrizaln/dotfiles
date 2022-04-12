@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/bin/env python3
 
 import subprocess
 import sys
@@ -11,6 +11,32 @@ except:
 # CHOICE = "mem"
 
 MAX_COUNT = 10
+
+def getTotalMemory():
+    command = "free | grep Mem: | awk '{print $2}'"
+    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE)
+    totalMem = int(result.stdout.decode("utf-8"))
+    return totalMem
+
+def getMemoryUsageInBytes(percentage, split=False):
+    orderNames = {0: "k", 3: "M", 6: "G"}
+
+    totalMem = getTotalMemory()
+    memUsage = percentage * totalMem / 100
+
+    order = 0
+    while (memUsage > 999):
+        memUsage /= 1024
+        order += 3
+
+    if (order < 6):
+        memUsage = int(memUsage)
+    else:
+        memUsage = round(memUsage, 1)
+
+    if (split):
+        return [memUsage, orderNames[order]]
+    return str(memUsage) + orderNames[order]
 
 def getLines(cn="cpu"):
     if cn is None:
@@ -51,7 +77,7 @@ def getSortedList(dicti, choice):
         col = 1
 
     theList = list(dicti.items())
-    theList = theList[0:30]         # get maximum of 20 element
+    theList = theList[0:30]         # get maximum of 30 element
 
     for i in range(len(theList)):
         sorted = True
@@ -71,7 +97,8 @@ def getSortedList(dicti, choice):
 
 def printOut(lst):
     for i, (n, (p, m)) in enumerate(lst):
-        print(f"{round(p,1):>4} {round(m,1):>4} {n:<}")
+        memInB = getMemoryUsageInBytes(m, split=False)
+        print(f"{round(p,1):>4} {round(m,1):>4}|{memInB:<6}  {n:<}")
 
 
 def main():
@@ -80,6 +107,7 @@ def main():
     processDict = getProcesses(lines)
     processList = getSortedList(processDict, choice)
     printOut(processList)
+#    print(getTotalMemoryUsage(processDict))
 
 if __name__ == "__main__":
     main()

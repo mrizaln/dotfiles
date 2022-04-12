@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 if [[ $1 == "" ]]; then
     echo "Usage: ./change_wallpaper.sh </path/to/your/wallpaper>"
@@ -14,16 +14,20 @@ for s in "/" "~"; do
 done
 
 if [ $absolute -eq 0 ]; then
-    echo please input absolute path to the file
-    exit 1
+#    echo please input absolute path to the file
+#    exit 1
+    wallpaper_input="$PWD/$1"
+    echo "$wallpaper_input"
+else
+    wallpaper_input="$1"
 fi
 
-wallpaper_name=current_wallpaper
-wallpaper_path=$HOME/.config/bspwm/
-wall=$wallpaper_path/$wallpaper_name
+wallpaper_name="current_wallpaper"
+wallpaper_path="$HOME/.config/bspwm/"
+wall="$wallpaper_path/$wallpaper_name"
 
-rm $wall
-cp "$1" $wall
-feh --bg-fill "$1"
+rm "$wall"
+cp "$wallpaper_input" "$wall"
+feh --bg-fill "$wallpaper_input"
 
 exit 0

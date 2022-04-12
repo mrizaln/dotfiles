@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/bin/env bash
 
-# use 7th font style
-font=7      # see polybar config file
+delta_time=1
 
 color0="#A3BE8C"    #green
 color1="#EBCB8B"    #yellow
@@ -13,7 +12,7 @@ read_cpu()
     cpu_sum_0="${cpu_now_0[@]:1}"
     cpu_sum_0=$((${cpu_sum_0// /+}))        # calculate sum
 
-    sleep 1     # repeat
+    sleep $delta_time     # repeat
 
     cpu_now_1=($(head -n1 /proc/stat))
     cpu_sum_1="${cpu_now_1[@]:1}"
@@ -55,10 +54,10 @@ format()
 cpu="$(read_cpu)"
 mem="$(read_mem)"
 
-P=$(format "$cpu" P)
-M=$(format "$mem" M)
+P=$(format "$cpu" 'P')
+M=$(format "$mem" 'M')
 
 cpu=$(format "$cpu")
 mem=$(format "$mem")
 
-echo "[${P}|${M}: ${cpu}|${mem}]"
+echo "[${P}:${cpu}|${M}:${mem}]"
