@@ -3,14 +3,20 @@
 import subprocess
 import sys
 
+args = sys.argv
+
 try:
-    CHOICE = sys.argv[1].lower()
+    CHOICE = args[1].lower()        # prevent if no argument added
 except:
     CHOICE = "cpu"
 
-# CHOICE = "mem"
+if CHOICE not in ("cpu", "mem"):
+    CHOICE = "cpu"
 
-MAX_COUNT = 10
+try:
+    MAX_COUNT = int(args[2])        # if no 2nd argument
+except:
+    MAX_COUNT = 10
 
 def getTotalMemory():
     command = "free | grep Mem: | awk '{print $2}'"
@@ -68,13 +74,11 @@ def getProcesses(lines):
             names[name] = [float(line[0]), float(line[1])]
     return names
 
-def getSortedList(dicti, choice):
+def getSortedList(dicti, choice="cpu"):
     if choice == "cpu":
         col = 1
     elif choice == "mem":
         col = 2
-    else:
-        col = 1
 
     theList = list(dicti.items())
     theList = theList[0:30]         # get maximum of 30 element
@@ -98,7 +102,7 @@ def getSortedList(dicti, choice):
 def printOut(lst):
     for i, (n, (p, m)) in enumerate(lst):
         memInB = getMemoryUsageInBytes(m, split=False)
-        print(f"{round(p,1):>4} {round(m,1):>4}|{memInB:<6}  {n:<}")
+        print(f"{round(p,1):>5}  {round(m,1):>4}|{memInB:<6}  {n:<}")
 
 
 def main():

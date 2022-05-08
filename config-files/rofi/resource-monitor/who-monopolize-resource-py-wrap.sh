@@ -13,4 +13,4 @@ elif [[ "$1" == "mem" ]]; then
 fi
 
 
-python3 $dir/who-monopolize-resource.py $1 | $rofi_command -dmenu  -markup-rows -i -p "  ${header[0]} ${header[1]}   ${header[2]}"
+python3 $dir/who-monopolize-resource.py $1 | $rofi_command -dmenu  -markup-rows -i -p "   ${header[0]}  ${header[1]}   ${header[2]}"
