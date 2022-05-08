@@ -34,6 +34,15 @@ read_mem()
     echo "$mem_usage"
 }
 
+read_swap()
+{
+    swap_now=($(free | grep Swap))
+    swap_total="${swap_now[1]}"
+    swap_used="${swap_now[2]}"
+    swap_usage=$(( 100 * swap_used / swap_total ))
+    echo "$swap_usage"
+}
+
 format()
 {
     percentage="$1"
@@ -53,11 +62,15 @@ format()
 
 cpu="$(read_cpu)"
 mem="$(read_mem)"
+swap="$(read_swap)"
 
 P=$(format "$cpu" 'P')
 M=$(format "$mem" 'M')
+S=$(format "$swap" 'S')
 
 cpu=$(format "$cpu")
 mem=$(format "$mem")
+swap=$(format "$swap")
 
-echo "[${P}:${cpu}|${M}:${mem}]"
+# echo "[${P}:${cpu}|${M}:${mem}]"
+echo "[${P}:${cpu}|${M}:${mem}|${S}:${swap}]"
