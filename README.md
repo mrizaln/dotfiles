@@ -4,4 +4,4 @@ Config files and scripts of my custom desktop environment (on Debian based syste
 
 This repo was inspired by [this](https://github.com/christitustech/debian-titus).
 
-![preview](screenshot/2022-01-01_02-27.png)
+![preview](screenshot/screenshot.png)
