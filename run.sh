@@ -7,7 +7,7 @@ sudo dpkg -i 'others/rofi_1.7.0-1_amd64.deb'
 sudo apt update; sudo apt upgrade; sudo apt autoremove;
 
 # Install necessary packages
-sudo apt install python3 unzip bspwm polybar rofi picom sddm kitty thunar flameshot neofetch sxhkd dunst git lxpolkit lxappearance xorg htop sct brightnessctl alsa-utils pulseaudio pavucontrol variety libglib2.0-0 libglib2.0-bin feh mpv net-tools papirus-icon-theme fonts-noto-color-emoji fonts-noto-cjk fonts-firacode fonts-font-awesome fonts-ubuntu fonts-cantarell fonts-fantasque-sans libqt5svg5 qml-module-qtquick-controls openssh-client openssh-server ttf-mscorefonts-installer
+sudo apt install python3 unzip bspwm polybar rofi picom sddm kitty thunar flameshot neofetch sxhkd dunst git lxpolkit lxappearance xorg htop sct brightnessctl alsa-utils pulseaudio pavucontrol variety libglib2.0-0 libglib2.0-bin feh mpv net-tools vnstat papirus-icon-theme fonts-noto-color-emoji fonts-noto-cjk fonts-firacode fonts-font-awesome fonts-ubuntu fonts-cantarell fonts-fantasque-sans libqt5svg5 qml-module-qtquick-controls openssh-client openssh-server ttf-mscorefonts-installer
 
 # Download Nordic Theme
 git clone https://github.com/EliverLara/Nordic.git
