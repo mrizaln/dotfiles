@@ -647,7 +647,7 @@ content = "⏻"
 
 [module/player-mpris-tail]
 type = custom/script
-exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f '[{title}]'
+exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f '{title}'
 ;exec = ~/.config/polybar/polybar-scripts/rotate.sh 20
 tail = true
 click-left = playerctl play-pause &
@@ -657,8 +657,11 @@ format-label-font = 6
 content-overline = ${colors.background}
 content-underline = ${colors.background}
 format-background = ${colors.shade16}
-format-foreground = ${colors.shade2}
-label-maxlen = 15
+format-foreground = ${colors.shade6}
+
+;label = [%{F#A3BE8C}%output%%{F-}]
+label = [%output%]
+label-maxlen = 20   ; 20 formatting, 20 actual
 
 [module/pulseaudio-microphone]
 type = custom/script

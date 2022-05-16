@@ -63,6 +63,7 @@ bspc rule -a gnuplot_qt state=floating
 bspc rule -a Yad state=floating
 bspc rule -a Simplescreenrecorder state=floating
 bspc rule -a LearnOpenGL state=floating
+bspc rule -a jetbrains-studio state=floating
 #bspc rule -a Wine state=floating
 #bspc rule -a Kupfer.py focus=on
 #bspc rule -a Screenkey manage=off
@@ -86,7 +87,7 @@ sleep 0.5
 # Extra Files for mrizaln
 brightnessctl -r &
 brightnessctl -s &
-sct 5000 &
+sct 5500 &
 feh --bg-fill ~/.config/bspwm/current_wallpaper &
 bspc desktop -f ^5
 # START_COMMAND=neofetch kitty bash &     # execute $START_COMMAND before bash promt (see ~/.bashrc)        # broken
