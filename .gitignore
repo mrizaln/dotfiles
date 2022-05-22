@@ -1,4 +1,5 @@
 config-files/*
+
 !config-files/bspwm/
 !config-files/dunst/
 !config-files/gtk-2.0/
@@ -8,7 +9,10 @@ config-files/*
 !config-files/polybar/
 !config-files/rofi/
 !config-files/sxhkd/
+
 !config-files/picom.conf
+!config-files/default_wallpaper
+
 
 scripts/*
 !scripts/*.sh
