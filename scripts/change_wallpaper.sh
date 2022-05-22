@@ -23,7 +23,7 @@ else
 fi
 
 wallpaper_name="current_wallpaper"
-wallpaper_path="$HOME/.config/bspwm/"
+wallpaper_path="$HOME/.config/"
 wall="$wallpaper_path/$wallpaper_name"
 
 rm "$wall"

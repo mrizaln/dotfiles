@@ -88,7 +88,7 @@ sleep 0.5
 brightnessctl -r &
 brightnessctl -s &
 sct 5500 &
-feh --bg-fill ~/.config/bspwm/current_wallpaper &
+[[ -f ~/.config/current_wallpaper ]] && feh --bg-fill ~/.config/current_wallpaper || feh --bg-fill ~/.config/default_wallpaper &
 bspc desktop -f ^5
 # START_COMMAND=neofetch kitty bash &     # execute $START_COMMAND before bash promt (see ~/.bashrc)        # broken
 kitty bash &
