@@ -9,9 +9,9 @@ super + x
 
 # program launcher
 super + r
-    rofi -show run
+    rofi -show drun -scroll-method 1
 super + shift + r
-	rofi -show drun
+	rofi -show run -scroll-method 1
 
 
 # make sxhkd reload its configuration files:
@@ -24,21 +24,47 @@ super + shift + b
 	firefox
 
 
-# screen capture
-Print
-	flameshot full -p ~/Pictures/Screenshots
+# file browser
+super + e
+	thunar
 
-shift + Print
-	flameshot gui -p ~/Pictures/Screenshots
 
-ctrl + Print
-    $HOME/.local/bin/screenshot.sh whole
-
-ctrl + shift + Print
-    $HOME/.local/bin/screenshot.sh part
-
+# power
 ctrl + alt + Delete
     $HOME/.config/rofi/powermenu/powermenu.sh
+
+
+# screen capture
+super + Print
+	flameshot gui -p ~/Pictures/Screenshots
+
+super + ctrl + alt + Print
+	simplescreenrecorder
+
+Print
+    $HOME/.local/bin/screenshot.sh whole copy
+
+alt + Print
+	$HOME/.local/bin/screenshot.sh whole copy 5
+
+ctrl + Print
+	$HOME/.local/bin/screenshot.sh whole copy-only
+
+ctrl + alt + Print
+	$HOME/.local/bin/screenshot.sh whole copy-only 5
+
+
+shift + Print
+    $HOME/.local/bin/screenshot.sh part copy
+
+alt + shift + Print
+	$HOME/.local/bin/screenshot.sh part copy 5
+
+ctrl + shift + Print
+	$HOME/.local/bin/screenshot.sh part copy-only
+
+ctrl + alt + shift + Print
+	$HOME/.local/bin/screenshot.sh part copy-only 5
 
 
 #
@@ -74,8 +100,7 @@ super + y
 super + g
 	bspc node -s biggest.window
 
-super + e
-	thunar
+
 #
 # state/flags
 #
