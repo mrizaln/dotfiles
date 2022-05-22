@@ -73,7 +73,7 @@ bspc rule -a jetbrains-studio state=floating
 #Auto-Start
 sleep 0.50
 # urxvtc &   # i don't use urxvt
-bash ~/.config/polybar/launch.sh &
+bash "$HOME/.config/polybar/launch.sh" &
 lxpolkit &
 picom --config "$HOME/.config/picom.conf" &
 #variety &
@@ -88,7 +88,9 @@ sleep 0.5
 brightnessctl -r &
 brightnessctl -s &
 sct 5500 &
-[[ -f ~/.config/current_wallpaper ]] && feh --bg-fill ~/.config/current_wallpaper || feh --bg-fill ~/.config/default_wallpaper &
+
+[ -f "$HOME/.config/current_wallpaper" ] && feh --bg-fill "$HOME/.config/current_wallpaper" || feh --bg-fill "$HOME/.config/default_wallpaper"
+
 bspc desktop -f ^5
 # START_COMMAND=neofetch kitty bash &     # execute $START_COMMAND before bash promt (see ~/.bashrc)        # broken
 kitty bash &
