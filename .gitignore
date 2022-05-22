@@ -9,3 +9,6 @@ config-files/*
 !config-files/rofi/
 !config-files/sxhkd/
 !config-files/picom.conf
+
+scripts/*
+!scripts/*.sh
