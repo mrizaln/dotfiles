@@ -146,13 +146,14 @@ class Process:
 
 
     def __str__(self) -> str:
-        memInBytesWithOrder = self.__formatBytes(self.__mem)
-        swapInBytesWithOrder = self.__formatBytes(self.__swap)
+        memInBytesWithOrder = self.formatBytes(self.__mem)
+        swapInBytesWithOrder = self.formatBytes(self.__swap)
 
         return f"| {round(self.__pcpu,1):>5} | {round(self.__pmem,1):>4} | {memInBytesWithOrder:>4} | {swapInBytesWithOrder:>4} | {self.__comm:<20} {str(self.__pid):<18}"
 
 
-    def __formatBytes(self, kBytes: int) -> str:
+    @staticmethod
+    def formatBytes(kBytes: int) -> str:
         orderNames = {0: "k", 3: "M", 6: "G", 9: "T"}
 
         order = 0
@@ -203,7 +204,6 @@ class Process:
         elif type == "comm": return self.__comm
         elif type == "swap": return self.__swap
         else:                return None
-
 
 
 
@@ -338,7 +338,7 @@ class ProcessArray:
                 newArrayIndex += 1
                 newProcessArray.append(process)
                 processCommNames[comm] = newArrayIndex
-        
+
         self.__processArray = newProcessArray
 
 
@@ -361,6 +361,16 @@ class ProcessArray:
 
     def getProcessArray(self):
         return self.__processArray
+
+
+    def getTotalMemoryUsage(self):
+        processes = self.__processArray
+
+        totalMem: int = 0
+        for process in processes:
+            totalMem += process.getAttribute("mem")
+
+        return Process.formatBytes(totalMem)
 
 
     def print(self, sortBy: str = "cpu", amount: int = -1) -> None:
