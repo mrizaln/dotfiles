@@ -16,6 +16,7 @@ generate_mode ()
     xrandr --addmode HDMI-A-0 "$mode_identifier"
 }
 
+
 activate_mode ()
 {
     mode=$1
@@ -25,6 +26,7 @@ activate_mode ()
 
     xrandr --output HDMI-A-0 --mode $mode $position eDP
 }
+
 
 delete_mode ()
 {
@@ -37,6 +39,17 @@ delete_mode ()
     xrandr --rmmode "$mode_identifier"
 }
 
+
+adb_reverse_connection ()
+{
+    device="$1"
+    port="5900"     # default vnc port
+    if [[ "$2" != "" && "$2" =~ ^[0-9]+$ ]]; then port="$2"; fi
+    adb connect $device
+    adb reverse tcp:"$port" tcp:"$port"
+}
+
+
 run_vnc ()
 {
     width=$1
@@ -47,6 +60,7 @@ run_vnc ()
 
     x11vnc -clip "${width}x${height}${offset}" -repeat -passwd password #-unixpw #-vencrypt nodh:only -ssl
 }
+
 
 run_polybar ()
 {
@@ -60,18 +74,29 @@ run_polybar ()
     done
 }
 
+
 main ()
 {
     res="$1"
     while true; do
         case "$res" in
-            720)
+            '720')
                 width=1280
                 height=720
                 break
                 ;;
-            768)
+            '768')
                 width=1366
+                height=768
+                break
+                ;;
+            '720-')
+                width=1520
+                height=720
+                break
+                ;;
+            '768-')
+                width=1621
                 height=768
                 break
                 ;;
@@ -100,7 +125,8 @@ main ()
                 break
                 ;;
             "--right-of")
-                offset="+${width}+0"
+#                offset="+${width}+0"
+                offset="+1366+0"
                 break
                 ;;
             *)
@@ -112,8 +138,20 @@ main ()
     done
 
     connect_method="$3"
+    if [[ "$connect_method" = "" ]]; then
+        read -p "what connection method to use? (wlan/usb)" connect_method
+    fi
+
     if [[ "$connect_method" = "usb" ]]; then
-    
+        devices=$(adb devices | tail +2 | awk -F ' ' '{print $1}')
+        echo "$devices" | cat -n
+        devices=($devices)
+        read -p "choose device: " num
+        num=$((num - 1))
+        device="${devices[$num]}"
+
+        adb_reverse_connection "$device"
+    fi
 
     frame_rate=60
 
@@ -130,6 +168,6 @@ main ()
     exit 0
 }
 
-main $1 $2
+main $1 $2 $3
 
 exit 0
