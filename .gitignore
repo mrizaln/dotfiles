@@ -16,3 +16,4 @@ config-files/*
 
 scripts/*
 !scripts/*.sh
+!scripts/*.py
