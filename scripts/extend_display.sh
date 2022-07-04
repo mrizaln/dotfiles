@@ -139,8 +139,10 @@ main ()
 
     connect_method="$3"
     if [[ "$connect_method" = "" ]]; then
-        read -p "what connection method to use? (wlan/usb)" connect_method
+        read -p "what connection method to use? (wlan/usb/hdmi) " connect_method
     fi
+
+    use_vnc=true
 
     if [[ "$connect_method" = "usb" ]]; then
         devices=$(adb devices | tail +2 | awk -F ' ' '{print $1}')
@@ -151,6 +153,9 @@ main ()
         device="${devices[$num]}"
 
         adb_reverse_connection "$device"
+
+    elif [[ "$connect_method" == "hdmi" ]]; then
+        use_vnc=false
     fi
 
     frame_rate=60
@@ -158,9 +163,36 @@ main ()
     generate_mode $width $height $frame_rate
     activate_mode "$mode_identifier" "$pos"
     sleep 1     # wait for a while
+
     run_polybar                                 # create instances of polybar on each monitor
-    run_vnc $width $height "$offset"
-    delete_mode "$mode_identifier"
+
+    if [[ "$use_vnc" == false ]]; then
+        echo -e "\n\n\ndisplay extended to ${pos:2} the screen \nextended resolution is: ${width}x${height}"
+        while true; do
+            read -p "[k]eep & exit/[D]elete & exit? " ans
+
+            case "$ans" in
+                'k')
+                    ;&
+                'K')
+                    break;
+                    ;;
+                'd')
+                    ;&
+                'D')
+                    delete_mode "$mode_identifier"
+                    break;
+                    ;;
+                *)
+                    echo "invalid input, try again."
+                    ;;
+            esac
+        done
+    else
+        run_vnc $width $height "$offset"
+        delete_mode "$mode_identifier"
+    fi
+
     run_polybar                                 # recreate polybar instance on main monitor (and kill previous instance on deleted mode)
 
     echo "exiting."
