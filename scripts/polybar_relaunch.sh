@@ -1,0 +1,1 @@
+/home/mrizaln/.config/polybar/launch.sh
