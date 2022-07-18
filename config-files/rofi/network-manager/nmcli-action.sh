@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+# change this according to the installed device name on the computer
 device="wlp2s0"
 
 theme="networktable.rasi"
@@ -12,7 +13,7 @@ get_status()
 
     case "${device_status[2]}" in
         'connected')
-            echo "$device connected to ${device_status[3]}"
+            echo "$device connected to ${device_status[@]:3}"
             ;;
         'disconnected')
             echo "Not Connected"
@@ -66,7 +67,6 @@ connect()
     shopt -s extglob
     ssid="$1"
     ssid="${ssid%%*([[:blank:]])}"
-#    echo "|$ssid|"
 
     if [[ "$ssid" == "" ]]; then
         exit 0;
@@ -77,14 +77,27 @@ connect()
         hidden="no"
     fi
 
-    password="$(prompt "password")"
-    if [[ "$password" == "" ]]; then
-        exit 0
-    fi
-#    echo "|$password|"
+    # check whether the computer has connected to the network before (the network details is saved in the computer)
+    promt_password=true
+    while read c; do
+        if [[ "$c" == "$ssid" ]]; then
+            promt_password=false
+            break
+        fi
+    done < <(ls /etc/NetworkManager/system-connections/ | cut -d. -f1)
 
-    notify-send "connecting..."
-    result=$(nmcli device wifi connect "$ssid" password "$password" hidden "$hidden")
+    if [[ "$promt_password" == true ]]; then
+        password="$(prompt "password")"
+        if [[ "$password" == "" ]]; then
+            exit 0
+        fi
+        notify-send "connecting..."
+        result=$(nmcli device wifi connect "$ssid" password "$password" hidden "$hidden" 2>&1)
+    else
+        notify-send "connecting..."
+        result=$(nmcli device wifi connect "$ssid" 2>&1)
+    fi
+
     notify-send "$result"
 }
 
@@ -92,7 +105,15 @@ connect()
 status=$(get_status)
 [ $? -ne 0 ] && exit 1
 
-ssid="$(get_list | $rofi_command -dmenu -markup-rows -i -p "$status")"
+list=$(echo -e "$(get_list) \ndisconnect")
+
+ssid="$(echo "$list" | $rofi_command -dmenu -markup-rows -i -p "$status")"
+if [[ "$ssid" == disconnect ]]; then
+    msg=$(nmcli device disconnect "$device")
+    notify-send "$msg"
+    exit 0
+fi
+
 ssid="$(echo "$ssid" | cut -d '|' -f1)"
 
 connect "$ssid"
