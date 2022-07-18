@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 wallpaper_name="current_wallpaper"
-wallpaper_path="$HOME/.config/"
+wallpaper_path="$HOME/.config"
 wall="$wallpaper_path/$wallpaper_name"
 
 
@@ -29,6 +29,10 @@ set_wallpaper ()
 {
     input="$1"
     output="$2"
+
+    echo $input
+    echo $output
+
     if [[  "$input" == "$output" ]]; then
         exit 0
     fi
