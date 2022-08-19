@@ -647,7 +647,8 @@ content = "⏻"
 
 [module/player-mpris-tail]
 type = custom/script
-exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f '{title}'
+;exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f '{title}'
+exec = ~/.config/polybar/polybar-scripts/player-mpris-tail.py -f '{icon}'
 ;exec = ~/.config/polybar/polybar-scripts/rotate.sh 20
 tail = true
 click-left = playerctl play-pause &
@@ -721,9 +722,9 @@ format-foreground = ${colors.shade7}
 format-background = ${colors.shade16}
 format-overline = ${colors.background}
 format-underline = ${colors.background}
-click-left = $HOME/.config/polybar/polybar-scripts/resource-monitor/resource-monitor-py-wrap.sh cpu 20
-click-right = $HOME/.config/polybar/polybar-scripts/resource-monitor/resource-monitor-py-wrap.sh mem 20
-click-middle = $HOME/.config/polybar/polybar-scripts/resource-monitor/resource-monitor-py-wrap.sh swap 20
+click-left = $HOME/.config/polybar/polybar-scripts/resource-monitor/resource_monitor_py_wrap.sh cpu 20
+click-right = $HOME/.config/polybar/polybar-scripts/resource-monitor/resource_monitor_py_wrap.sh mem 20
+click-middle = $HOME/.config/polybar/polybar-scripts/resource-monitor/resource_monitor_py_wrap.sh swap 20
 
 label = %output%
 
@@ -738,4 +739,4 @@ format-background = ${colors.shade16}
 format-overline = ${colors.background}
 format-underline = ${colors.background}
 click-right = $HOME/.config/polybar/polybar-scripts/vnstat-daily-usage.sh
-click-left = $HOME/.config/rofi/network-manager/nmcli-action.sh
+click-left = $HOME/.config/rofi/network-manager/nmcli_action.sh
