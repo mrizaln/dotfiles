@@ -1,0 +1,6 @@
+. ~/.bashrc
+echo "Disk Usage:"
+~/.local/bin/check-disk-usage.py
+
+echo -e "\nBasic Information:"
+neofetch
