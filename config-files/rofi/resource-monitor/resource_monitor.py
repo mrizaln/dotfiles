@@ -297,6 +297,49 @@ class ProcessArray:
             if not swapped:
                 break
 
+        # insertion sort
+#        for startIndex in range(size):
+#            extract = processArray[startIndex]
+#
+#            for sortedIndex in range(startIndex-1, -1, -1):
+#                current = processArray[sortedIndex]
+#
+#                if current.getAttribute(attrib) < extract.getAttribute(attrib):
+#                    break
+#
+#                processArray[sortedIndex+1] = processArray[sortedIndex]
+#                extract = current
+#
+#            processArray[startIndex] = extract
+
+
+    """
+        // insertion sort
+    template <std::size_t arr_n>
+    void insertionSort(std::array<int, arr_n>& array)
+    {
+        for (std::size_t startIndex{ 0 }; startIndex < array.size(); ++startIndex)
+        {
+            int* numPtr{ &array[startIndex] };
+
+            // extract
+            int num{ *numPtr };
+
+            for (int sortedIndex{ (int)(startIndex-1) }; sortedIndex >= 0; --sortedIndex)
+            {
+                int* current{ &array[sortedIndex] };
+
+                if (*current < num)
+                    break;
+
+                *(current + 1) = *current;
+                numPtr = current;
+            }
+
+            *numPtr = num;
+        }
+    }
+    """
 
     def __mergeProcesses(self, proc1: Process, proc2: Process):
         # TODO: implement the merging
