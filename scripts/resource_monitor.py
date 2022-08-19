@@ -1,0 +1,1 @@
+../../.config/rofi/resource-monitor/resource_monitor.py
