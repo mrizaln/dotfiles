@@ -6,12 +6,15 @@
 super + x
 	kitty 
 
-
-# program launcher
+# show run dialog
 super + r
-    rofi -show drun -scroll-method 1
+    bash -c "$(yad --entry --entry-label=run)"; [ $(echo $?) -eq 127 ] && notify-send "command not found"
 super + shift + r
 	rofi -show run -scroll-method 1
+
+# program launcher
+super + a
+    rofi -show drun -scroll-method 1
 
 
 # make sxhkd reload its configuration files:
@@ -216,6 +219,12 @@ shift + XF86AudioLowerVolume
 shift + XF86AudioRaiseVolume
     amixer set Master 5%+
 
+alt + XF86AudioLowerVolume
+    amixer set Master 1%-
+    
+alt + XF86AudioRaiseVolume
+    amixer set Master 1%+
+
 
 # brightness control
 XF86MonBrightnessUp
@@ -260,15 +269,12 @@ ctrl + alt + v
 ctrl + shift + alt + v
     bash my_schedule.sh
 
-# pause dunst
-#ctrl + alt + Escape
-#    dunstctl set-paused toggle
-
 
 # pulseaudio control
 ctrl + shift + F1
     pavucontrol
 
-# show windows
-super + a
-    rofi -show window
+
+# kill rofi
+ctrl + alt + Escape
+    killall rofi
