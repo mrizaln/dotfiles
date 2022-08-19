@@ -15,4 +15,4 @@ elif [[ "$1" == "swap" ]]; then
 fi
 
 
-python3 $dir/resource-monitor.py $1 $2 | $rofi_command -dmenu  -markup-rows -i -p " No. |  ${header[0]} | ${header[1]} | ${header[2]}"
+python3 $dir/resource_monitor.py $1 $2 | $rofi_command -dmenu  -markup-rows -i -p " No. |  ${header[0]} | ${header[1]} | ${header[2]}"
