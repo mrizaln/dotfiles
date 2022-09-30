@@ -39,7 +39,7 @@ ctrl + alt + Delete
 
 # screen capture
 super + Print
-	flameshot gui -p ~/Pictures/Screenshots
+	flameshot gui
 
 super + ctrl + alt + Print
 	simplescreenrecorder

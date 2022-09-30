@@ -54,6 +54,7 @@ bspc rule -a Firefox-esr desktop='^1'
 bspc rule -a mpv state=floating
 bspc rule -a Code dekstop='^4'
 bspc rule -a Sublime_text desktop='^4'
+bspc rule -a "arduino ide" desktop='^4'
 bspc rule -a libreoffice desktop='^3'
 bspc rule -a feh state=floating
 bspc rule -a Pavucontrol state=floating desktop='^10' follow=on
@@ -63,6 +64,7 @@ bspc rule -a gnuplot_qt state=floating
 bspc rule -a Yad state=floating
 bspc rule -a Simplescreenrecorder state=floating
 bspc rule -a LearnOpenGL state=floating
+bspc rule -a "Traffic Model" state=floating
 bspc rule -a jetbrains-studio state=floating
 #bspc rule -a Wine state=floating
 
