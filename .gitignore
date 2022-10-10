@@ -4,6 +4,7 @@ config-files/*
 !config-files/dunst/
 !config-files/gtk-2.0/
 !config-files/gtk-3.0/
+!config-files/gtk-4.0/
 !config-files/kitty/kitty.conf*
 !config-files/kitty/theme.conf*
 !config-files/polybar/
