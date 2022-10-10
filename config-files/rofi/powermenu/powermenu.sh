@@ -69,8 +69,9 @@ action() {
             fi
             ;;
         $lock)
-    		if [[ -f /usr/local/bin/betterlockscreen ]]; then
-    			betterlockscreen -l
+    		if [[ -f $HOME/.local/bin/betterlockscreen ]]; then
+    			betterlockscreen -l &
+    			while [[ `pgrep -u $UID -x betterlockscreen` == "" ]]; do sleep 0.1; done
 #                lock_screen_with_blur_bg.sh
     		elif [[ -f /usr/bin/i3lock ]]; then
     			i3lock
