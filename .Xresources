@@ -1,21 +1,22 @@
 
-Xft.dpi:                        96
+Xft.dpi:                        80
 Xft.antialias:                  1
 Xft.autohint:                   1
 Xft.hinting:                    true
-Xft.hintstyle:                  hintslight
+Xft.hintstyle:                  hintfull
 Xft.rgba:                       rgb
 Xft.lcdfilter:                  lcddefault
 
 #define FONT Fira Code
+!#define FONT Ubuntu Mono
 #define ICON FiraCode Nerd Font Mono
 #define EMOJI Noto Color Emoji
 #define NERD_FONT Font Awesome 5 Free Solid
 !Font Awesome 5 Brands
-#define FONT_SIZE 9
-#define ICON_SIZE 9
-#define EMOJI_SIZE 9
-#define NERD_SIZE 9
+#define FONT_SIZE 10.5
+#define ICON_SIZE 11
+#define EMOJI_SIZE 11
+#define NERD_SIZE 11
 URxvt.font: xft:FONT:style=Medium:size=FONT_SIZE:antialias=true, xft:ICON:size=ICON_SIZE:antialias=true, xft:NERD_FONT:size=NERD_SIZE:antialias=true, xft:EMOJI:size=EMOJI_SIZE:antialias=true
 URxvt.boldFont: xft:FONT:style=Bold:size=FONT_SIZE:antialias=true, xft:ICON:size=ICON_SIZE:antialias=true, xft:NERD_FONT:size=NERD_SIZE:antialias=true, xft:EMOJI:size=EMOJI_SIZE:antialias=true
 URxvt.italicFont: xft:FONT:style=Italic:size=FONT_SIZE:antialias=true, xft:ICON:size=ICON_SIZE:antialias=true, xft:NERD_FONT:size=NERD_SIZE:antialias=true, xft:EMOJI:size=EMOJI_SIZE:antialias=true
@@ -26,28 +27,28 @@ URxvt.boldItalicFont: xft:FONT:style=Bold Italic:size=FONT_SIZE:antialias=true, 
 !*.font: xft:FiraCode Nerd Font Mono:style=Medium:size=14:antialias=true
 
 URxvt.depth:                    32
-URxvt*lineSpace:                0
-URxvt*letterSpace:		        -1
+URxvt*lineSpace:                -5
+URxvt*letterSpace:              -1
 URxvt.iso14755:                 false
 URxvt.iso14755_52:              false
-URxvt*geometry:                 184x44
+URxvt*geometry:                 90x25
 URxvt.scrollBar:                false
 URxvt*loginShell:               true
-URxvt.internalBorder:           88
+URxvt.internalBorder:           10
 
-URxvt.perl-ext:	 		        default,matcher,resize-font
+URxvt.perl-ext:                 default,matcher,resize-font
 URxvt.url-launcher:             linkhandler
-URxvt.matcher.button: 		    1
-URxvt.keysym.M-r:    		    perl:matcher:last
-URxvt.keysym.M-l:   		    perl:matcher:list
-URxvt.keysym.M-e:		        perl:matcher:select
-URxvt.saveLine:			        10000
-URxvt.cursorBlink: 		        true
-URxvt.cursorUnderline: 		    true
+URxvt.matcher.button:           1
+!URxvt.keysym.M-r:               perl:matcher:last
+!URxvt.keysym.M-l:               perl:matcher:list
+!URxvt.keysym.M-e:               perl:matcher:select
+URxvt.saveLine:                 10000
+URxvt.cursorBlink:              true
+!URxvt.cursorUnderline:          true
 
-URxvt*inheritPixmap:    	    false
-URxvt*transparent:      	    false
-
+URxvt*inheritPixmap:            true
+!URxvt*transparent:              true
+!URxvt*shading: 98
 ! do not scroll with output
 URxvt*scrollTtyOutput:          false
 
@@ -65,8 +66,8 @@ URxvt.keysym.C-question:        resize-font:show
 URxvt.resize-font.step:         0.5
 
 ! scroll by single line
-URxvt.keysym.Shift-Up:          command:\033]720;1\007
-URxvt.keysym.Shift-Down:        command:\033]721;1\007
+!URxvt.keysym.Shift-Up:          command:\033]720;1\007
+!URxvt.keysym.Shift-Down:        command:\033]721;1\007
 
 ! Helps with man/less/pagers
 URxvt.secondaryScreen:          1
@@ -79,13 +80,37 @@ URxvt.keysym.Control-Meta-v: builtin-string:
 URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 
+! tambahan mrizaln
+!URxvt.background:  #3c4659
+URxvt.background:   [60]#212733
+URxvt.foreground:   #d9d7ce
+URxvt.cursorColor:  #ffcc66
+URxvt.color0:       #191e2a
+URxvt.color8:       #686868
+URxvt.color1:       #ed8274
+URxvt.color9:       #f28779
+URxvt.color2:       #a6cc70
+URxvt.color10:      #bae67e
+URxvt.color3:       #fad07b
+URxvt.color11:      #ffd580
+URxvt.color4:       #6dcbfa
+URxvt.color12:      #73d0ff
+URxvt.color5:       #cfbafa
+URxvt.color13:      #d4bfff
+URxvt.color6:       #90e1c6
+URxvt.color14:      #95e6cb
+URxvt.color7:       #c7c7c7
+URxvt.color15:      #ffffff
+URxvt.selection_foreground: #212733
+URxvt.selection_background: #343f4c
+
 
 ! xterm settings
 
 xterm.vt100.termName: xterm-256color
 xterm.vt100.scaleHeight: 1.0
 XTerm.vt100.geometry: 80x32
-xterm.vt100.internalBorder: 44
+xterm.vt100.internalBorder: 10
 xterm.vt100.borderWidth: 0
 ! Every shell is a login shell by default (for inclusion of all necessary environment variables)
 XTerm*loginshell: true
@@ -112,10 +137,12 @@ xterm.vt100.translations: #override \n\
     Shift Ctrl <KeyPress> v:insert-selection(CLIPBOARD) \n\
     Shift Ctrl <KeyPress> c:select-set(CLIPBOARD)
 
-XTerm*faceSize: 10
+XTerm*faceSize: 9
 xterm.vt100.faceName: monospace
+xterm.vt100.faceSize: 9
 !xterm.vt100.faceNameDoublesize: Symbola:antialias=true
 !xterm.vt100.wideFont: FiraCode Nerd Font Mono:size=9:antialias=true
+
 
 ! stop output to terminal from jumping down to bottom of scroll again
 XTerm*scrollTtyOutput: false
