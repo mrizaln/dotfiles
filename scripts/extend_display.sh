@@ -100,9 +100,14 @@ main ()
                 height=768
                 break
                 ;;
+            '1080')
+                width=1920
+                height=1080
+                break
+                ;;
             *)
                 echo "Invalid resolution.";
-                read -p "resolution(720/768): " res
+                read -p "resolution(720/768/1080): " res
                 echo
                 ;;
         esac
