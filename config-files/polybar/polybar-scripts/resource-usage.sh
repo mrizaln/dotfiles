@@ -46,9 +46,13 @@ read_swap()
     swap_now=($(free | grep Swap))
     swap_total="${swap_now[1]}"
     swap_used="${swap_now[2]}"
-    swap_usage=$(( 100 * swap_used / swap_total ))
 
-    echo "$swap_usage"
+    if [[ $swap_total -eq 0 ]]; then
+        echo 0;
+    else
+        swap_usage=$(( 100 * swap_used / swap_total ))
+        echo "$swap_usage"
+    fi
 }
 
 
