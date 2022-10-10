@@ -62,7 +62,7 @@ def formatBytes(kBytes: int) -> str:
     orderNames = {0: "k", 3: "M", 6: "G", 9: "T"}
 
     order = 0
-    while (kBytes > 999):
+    while (kBytes > 1023):
         kBytes /= 1024
         order += 3
 
