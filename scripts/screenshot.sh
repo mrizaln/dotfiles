@@ -40,7 +40,7 @@ elif [[ "$option" == "part" && "$copy" == "no-copy" ]]; then
     notify-send "Screenshot saved"
 
 else
-    echo -e "\nnot enough argument specified\n"
+    echo -e "not enough argument specified\n"
     echo -e "usage: \t $0  (whole|part)  (copy-only|copy|no-copy)  [delay in seconds]\n"
     exit 0
 fi
