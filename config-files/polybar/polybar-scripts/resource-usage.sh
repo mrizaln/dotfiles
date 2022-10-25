@@ -4,9 +4,13 @@ delta_time=1
 
 arg="$1"
 
+colors=($(xrdb -query | sed -n 's/.*color\([0-9]\)/\1/p' | sort -nu | cut -f2))
+
 color0="#A3BE8C"    #green
 color1="#EBCB8B"    #yellow
 color2="#FF6A6A"    #red
+
+color_warn="#FF6A6A"
 
 
 read_cpu()
@@ -65,9 +69,9 @@ format()
         string="$2"
     fi
 
-    if   [ "$percentage" -lt 25 ]; then color="$color0"
-    elif [ "$percentage" -lt 80 ]; then color="$color1"
-    else                                color="$color2"
+    if   [ "$percentage" -lt 25 ]; then color="${colors[2]}"
+    elif [ "$percentage" -lt 80 ]; then color="${colors[3]}"
+    else                                color="$color_warn"
     fi
 
     echo %{F${color}}$string%{F-}

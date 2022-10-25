@@ -69,17 +69,16 @@ action() {
             fi
             ;;
         $lock)
-    		if [[ -f $HOME/.local/bin/betterlockscreen ]]; then
+    		if [[ -f /usr/local/bin/betterlockscreen ]]; then
     			betterlockscreen -l &
-    			while [[ `pgrep -u $UID -x betterlockscreen` == "" ]]; do sleep 0.1; done
 #                lock_screen_with_blur_bg.sh
     		elif [[ -f /usr/bin/i3lock ]]; then
     			i3lock
     		fi
             ;;
         $suspend)
+#			action $lock
 			systemctl suspend
-			action $lock
             ;;
         $logout)
     		ans=$(confirm_exit &)
