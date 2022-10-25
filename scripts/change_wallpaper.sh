@@ -30,8 +30,8 @@ set_wallpaper ()
     input="$1"
     output="$2"
 
-    echo $input
-    echo $output
+    # echo $input
+    # echo $output
 
     if [[  "$input" == "$output" ]]; then
         exit 0
@@ -65,7 +65,9 @@ main ()
     for s in "/" "~"; do
         if [[ $s != ${1:0:1} ]]; then
             absolute=0
-        else break
+        else
+            absolute=1 
+            break
         fi
     done
 
@@ -85,6 +87,8 @@ main ()
     fi
 
     set_wallpaper "$1" "$wall"
+
+    echo "Wallpaper set to $1"
 }
 
 
