@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 echo "Disk Usage:"
-~/.local/bin/check_disk_usage.py
+$HOME/.local/bin/check_disk_usage.py
 echo -e "\nBasic Information:"
 neofetch
+
+echo -e "\nUpdating calendar: (ctrl+c to cancel)"
+cal_dir="$HOME/.config/rofi/calendar"
+cal_cmd="${cal_dir}/calendar_list.py"
+python3 $cal_cmd -c $cal_dir -d 7 -f $cal_dir/calendar.ics
