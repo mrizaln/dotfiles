@@ -4,13 +4,18 @@
 
 # terminal emulator
 super + x
-	kitty 
+	urxvt -e tmux
+
+super + shift + x
+    urxvt
+
 
 # show run dialog
 super + r
     bash -c "$(yad --entry --entry-label=run)"; [ $(echo $?) -eq 127 ] && notify-send "command not found"
 super + shift + r
 	rofi -show run -scroll-method 1
+
 
 # program launcher
 super + a
@@ -36,6 +41,18 @@ super + e
 ctrl + alt + Delete
     $HOME/.config/rofi/powermenu/powermenu.sh
 
+alt + F4
+    $HOME/.config/rofi/powermenu/powermenu.sh
+
+
+# lock (Fn + F10 is the same as super + l as output)
+super + l
+    betterlockscreen -l 
+
+
+# extend display
+super + p
+    bspc rule -a URxvt -o state=floating && rxvt -e ~/.local/bin/extend_display.sh
 
 # screen capture
 super + Print
@@ -262,12 +279,12 @@ ctrl + F4
 
 # bring up time table
 ctrl + alt + v
-    bash ~/.config/rofi/timetable/today.sh
+    bash ~/.config/rofi/calendar/get_events.sh --today
 
 
 # bring up my schedule
 ctrl + shift + alt + v
-    bash my_schedule.sh
+    bash ~/.config/rofi/calendar/get_events.sh --print
 
 
 # pulseaudio control
