@@ -6,7 +6,7 @@ configuration {
     font:				"Ubuntu Mono 11";
     show-icons:				true;
     icon-theme:				"Arc-X-D";
-    scroll-method:			0;
+    scroll-method:			1;
     disable-history:	    true;
     sidebar-mode:			false;
 }
@@ -23,8 +23,8 @@ window {
     y-offset:         27;
 }
 listview {
-    lines:                          4;
-    columns:                        3;
+    lines:                          0;
+    columns:                        1;
 }
 mainbox {
     border:  0;
