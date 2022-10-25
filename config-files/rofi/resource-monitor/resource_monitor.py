@@ -4,27 +4,7 @@ import subprocess
 import sys
 import glob
 import os
-
-args = sys.argv
-
-try:
-    CHOICE = args[1].lower()        # if no argument added
-    if CHOICE not in ("cpu", "mem", "swap", "comm", "pid"):
-        raise
-except:
-    CHOICE = "cpu"
-
-try:
-    MAX_COUNT = int(args[2])        # if no 2nd argument
-except:
-    MAX_COUNT = -1
-
-
-try:
-    if args[3] == "--use-new": USE_NEW = True
-    else: raise
-except:
-    USE_NEW = False
+import argparse
 
 
 class Process:
@@ -210,11 +190,25 @@ class Process:
 class ProcessArray:
     def __init__(self, fromProcFile: bool = False) -> None:
         self.__processArray: list[Process] = list()
+        self.__index = 0
 
         if fromProcFile:
             self.__getProcInformationFromProcFiles()
         else:
             self.__getProcesses()       # get a unique array of sorted processes by comm names
+
+
+    def __iter__(self):
+        return self
+
+
+    def __next__(self):
+        if self.__index >= len(self.__processArray):
+            raise StopIteration
+        else:
+            process: Process = self.__processArray[self.__index]
+            self.__index += 1
+            return process
 
 
     def __getProcInformationFromProcFiles(self) -> None:
@@ -268,7 +262,7 @@ class ProcessArray:
                 processNames[comm] = index          # add new process name to the processName dict to inform that it is the first occured process
 
 
-    def __sortProcessArray(self, sortBy: str = "") -> None:
+    def __sortProcessArray(self, sortBy: str = "", reverse: bool = False) -> None:
         processArray = self.__processArray
         size = len(processArray)
 
@@ -296,6 +290,9 @@ class ProcessArray:
 
             if not swapped:
                 break
+
+        if reverse:
+            self.__processArray = processArray[::-1]
 
         # insertion sort
 #        for startIndex in range(size):
@@ -416,8 +413,8 @@ class ProcessArray:
         return Process.formatBytes(totalMem)
 
 
-    def print(self, sortBy: str = "cpu", amount: int = -1) -> None:
-        self.__sortProcessArray(sortBy)     # sort processArray
+    def print(self, sortBy: str = "cpu", amount: int = -1, reverse: bool = False) -> None:
+        self.__sortProcessArray(sortBy, reverse)     # sort processArray
 
         processArraySize = len(self.__processArray)
         if amount < 0 or amount > processArraySize:
@@ -429,8 +426,42 @@ class ProcessArray:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("mode", help="choose which process information to be sorted with",
+                        choices=['cpu', 'mem', 'swap', 'comm', 'pid', 'total' ],
+                        default=None)
+    parser.add_argument("-n", "--num", help="number of processes to display",
+                        action="store",
+                        metavar="N", type=int,
+                        default=-1)
+    parser.add_argument("-r", "--reverse", help="reverse displayed list",
+                        action="store_true")
+    parser.add_argument("--new", help="use new algorithm",
+                        action="store_true")
+
+    args = parser.parse_args()
+
+    CHOICE = args.mode
+    COUNT = args.num
+    REVERSE = args.reverse
+    SHOW_TOTAL = args.mode == 'total'
+    USE_NEW = args.new
+
+
     processes = ProcessArray(fromProcFile=USE_NEW)
-    processes.print(CHOICE, MAX_COUNT)
+
+    if SHOW_TOTAL:
+        pcpu = 0.0
+        pmem = 0.0
+        for p in processes:
+            pcpu += p.getAttribute("pcpu")
+            pmem += p.getAttribute("pmem")
+
+        print(f"CPU: {round(pcpu,1)}% | MEM: {round(pmem,1)}%")
+
+    else:
+        processes.print(CHOICE, COUNT, REVERSE)
 
 
 if __name__ == "__main__":
