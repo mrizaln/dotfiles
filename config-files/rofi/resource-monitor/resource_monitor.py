@@ -190,7 +190,7 @@ class Process:
 class ProcessArray:
     def __init__(self, fromProcFile: bool = False) -> None:
         self.__processArray: list[Process] = list()
-        self.__index = 0
+        self.__iter_index = 0
 
         if fromProcFile:
             self.__getProcInformationFromProcFiles()
@@ -203,11 +203,11 @@ class ProcessArray:
 
 
     def __next__(self):
-        if self.__index >= len(self.__processArray):
+        if self.__iter_index >= len(self.__processArray):
             raise StopIteration
         else:
-            process: Process = self.__processArray[self.__index]
-            self.__index += 1
+            process: Process = self.__processArray[self.__iter_index]
+            self.__iter_index += 1
             return process
 
 

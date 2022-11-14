@@ -23,7 +23,7 @@ get_status()
             exit 1
             ;;
         *)
-            echo -e "${device} device ${device_status[2]}" | $rofi_command -dmenu -markup-rows -i -p "Status"
+            echo -e "${device} device is ${device_status[2]}" | $rofi_command -dmenu -markup-rows -i -p "Status"
             exit 1
             ;;
     esac
