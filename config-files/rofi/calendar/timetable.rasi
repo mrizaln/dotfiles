@@ -3,7 +3,7 @@
  * Maintainer: joekamprad <joekamprad@endeavouros.com>
  *******************************************************/
 configuration {
-    font:				"Ubuntu Mono 11";
+    font:				    "Ubuntu Mono 11";
     show-icons:				true;
     icon-theme:				"Arc-X-D";
     scroll-method:			1;
@@ -18,8 +18,8 @@ window {
     border:           0;
     padding:          10;
     location:         northeast;
-    width:            500;
-    height:           150;
+    width:            540;
+    height:           180;
     y-offset:         27;
 }
 listview {

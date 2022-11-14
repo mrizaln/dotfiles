@@ -19,7 +19,7 @@ def getEvents(calendar: Calendar, startTime: float=-1, endTime: float=-1) -> lis
         return list(calendar.events)
 
     eventList: list[Event] = list()
-    for event in iter(calendar.timeline):
+    for event in calendar.events:
         event_begin_time: float = event.begin.timestamp()
         event_end_time: float = event.end.timestamp()
         if (endTime < event_begin_time or startTime > event_end_time):
@@ -47,41 +47,32 @@ def printCalendar(sourceFile: str, today: bool=False, timezone: str=TIMEZONE, fu
     if today:
         it = calendar.timeline.today()
         for event in it:
-            if full:
-                print(event.begin.to(timezone).format(), end =' - ')
-                print(event.end.to(timezone).format(), end = ' \t ')
-                print(event.name, end = '\t')
-                for ext in event.extra:
-                    print(ext, end=' ')
-                    print()
-            else:
-                begin: str = event.begin.to(timezone).format('HH:mm')
-                end: str = event.end.to(timezone).format('HH:mm')
-                time = begin + " - " + end
-                if event.duration.total_seconds() > 24*60*60:
-                    time = f"{event.begin.to(timezone).format('DD/MM')} - {event.end.to(timezone).format('DD/MM')}"
-                print(f"{time:<17}", end='')
-                print(event.name, end="    ")
-                print(f"({event.location})")
+            begin: str = event.begin.to(timezone).format('HH:mm')
+            end: str = event.end.to(timezone).format('HH:mm')
+            time = begin + " - " + end
+            if event.duration.total_seconds() > 24*60*60:
+                time = f"{event.begin.to(timezone).format('DD/MM')} - {event.end.to(timezone).format('DD/MM')}"
+            event_name = event.name if len(event.name) <= 40 else event.name[:37]+"..."
+            out_string = f"{time:<14}{event_name[:40]:<43}{event.location:}"
+            print(out_string)
+        if (len(list(it))) == 0:
+            print(f"{'-':^70}\n{21*'-':^70}\n{'No Events':^70}\n{21*'-':^70}\n{'-':^70}\n{'-':^70}")
     else:
-        it = iter(calendar.timeline)
+        it = calendar.timeline
+        begin_before = ''
         for event in it:
-            if full:
-                print(event.begin.to(timezone).format(), end =' - ')
-                print(event.end.to(timezone).format(), end = ' \t ')
-                print(event.name, end = '\t')
-                for ext in event.extra:
-                    print(ext, end=' ')
+            begin: str = event.begin.to(timezone).format('ddd (HH:mm)')
+            time = begin
+            if begin_before != begin[:3] and begin_before != '':    # if the day of current event and before is different, add a newline
                 print()
-            else:
-                begin: str = event.begin.to(timezone).format('ddd (HH:mm)')
-                time = begin
-                if event.duration.total_seconds() > 24*60*60:
-                    time = f"{event.begin.to(timezone).format('DD/MM')} - {event.end.to(timezone).format('DD/MM')}"
-                print(time, end='\t')
-                print(event.name, end="   ")
-                print(f"({event.location})")
-
+            begin_before = begin[:3]
+            if event.duration.total_seconds() > 24*60*60:
+                time = f"{event.begin.to(timezone).format('DD/MM')}-{event.end.to(timezone).format('DD/MM')}"
+            event_name = event.name if len(event.name) <= 40 else event.name[:37]+"..."
+            out_string = f"{time:<14}{event_name[:40]:<43}{event.location:}"
+            print(out_string)
+        if (len(list(it))) == 0:
+            print(f"{'-':^70}\n{'-':^70}\n{'No Events':^70}\n{'-':^70}\n{'-':^70}\n{'-':^70}")
 
 def cacheCalendar(sourceFile: str, destinationFile: str, startTime: float=-1, endTime: float=-1, timezone: str=TIMEZONE) -> None:
     sourceCalendar = openCalendar(sourceFile)
@@ -126,14 +117,12 @@ def main():
                         action="store",
                         metavar="END",
                         default=None)
-    parser.add_argument("-d", "--days", help="days interval from now. set to -1 to get all events",
+    parser.add_argument("-d", "--days", help="days interval from now. set to -1 to interpret all events (infinite time interval)",
                         type=int,
                         action="store",
                         metavar="DAYS",
                         default=None)
     parser.add_argument("-p", "--print", help="print a pretty list of all events",
-                        action="store_true")
-    parser.add_argument("-pf", "--print-full", help="print full format",
                         action="store_true")
     parser.add_argument("--today", help="use with print. print today events (not all events in a file)",
                         action="store_true")
@@ -149,7 +138,6 @@ def main():
     QUIET = args.quiet
     CACHE = args.cache
     PRINT = args.print
-    PRINT_FULL = args.print_full
     TZ = args.timezone if args.timezone is not None else TIMEZONE
 
     if args.file and not QUIET:
@@ -182,14 +170,6 @@ def main():
 
         file = args.file
         printCalendar(file, args.today, TZ)
-
-    if PRINT_FULL:
-        if not args.file:
-            print("file needs to be specified")
-            exit(1)
-
-        file = args.file
-        printCalendar(file, full=True)
 
 def empty(*args, **kwargs):
     pass
