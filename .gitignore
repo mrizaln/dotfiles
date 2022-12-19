@@ -1,4 +1,7 @@
 config-files/*
+config-files/rofi/calendar/*ics
+**/__pycache__
+**/.*
 
 !config-files/bspwm/
 !config-files/dunst/
@@ -18,3 +21,4 @@ config-files/*
 scripts/*
 !scripts/*.sh
 !scripts/*.py
+scripts/rst*
