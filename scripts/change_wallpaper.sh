@@ -59,6 +59,9 @@ main ()
     elif [[ "$1" == "--random" ]]; then
         feh --bg-fill "$(pick_random_wallpaper $HOME/Pictures/backgrounds)"
         exit 0
+    elif [[ "$1" == "--random-scheme" ]]; then
+        wal -i "$(pick_random_wallpaper $HOME/Pictures/backgrounds)" -b "#212733" -a 60 --saturate 1.0 --backend colorz
+        exit 0
     fi
 
     # check file path is absolute
