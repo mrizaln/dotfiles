@@ -69,25 +69,22 @@ bspc rule -a jetbrains-studio state=floating
 #bspc rule -a Wine state=floating
 
 #Auto-Start
-sleep 0.50
-# urxvtc &   # i don't use urxvt
-bash "$HOME/.config/polybar/launch.sh" &
 lxpolkit &
-picom --config "$HOME/.config/picom.conf" &
-sleep 0.5
+kdeconnect-indicator &
 
-# Extra Files for mrizaln
+wal -R -n -a 60 &
+bash "$HOME/.config/polybar/launch.sh" &
+picom --config "$HOME/.config/picom.conf" &
+
 brightnessctl -r &
 brightnessctl -s &
 sct 5500 &
 
-#wal -R
 [ -f "$HOME/.config/current_wallpaper" ] && feh --bg-fill "$HOME/.config/current_wallpaper" || feh --bg-fill "$HOME/.config/default_wallpaper"
+# change_wallpaper.sh --random-scheme
 
 bspc desktop -f ^5
 
 tmux new-session -d -s Startup
 tmux send-keys -t Startup "~/.config/bspwm/tmux-start.sh" Enter
-urxvt -e tmux attach -t Startup
-
-kdeconnect-indicator &
+urxvt -e bash -c "(cat ~/.cache/wal/sequences &); tmux attach -t Startup"
