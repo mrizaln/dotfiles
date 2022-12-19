@@ -1,1 +1,1 @@
-/home/mrizaln/.config/polybar/polybar-scripts/player-mpris-tail.py
+../../.config/polybar/polybar-scripts/player-mpris-tail.py

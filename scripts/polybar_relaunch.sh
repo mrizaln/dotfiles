@@ -1,1 +1,1 @@
-/home/mrizaln/.config/polybar/launch.sh
+../../.config/polybar/launch.sh
