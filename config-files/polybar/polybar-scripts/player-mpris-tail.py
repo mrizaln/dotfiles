@@ -54,29 +54,28 @@ class Player:
         self.icon                 : str   = ICON_NONE
         self.icon_reversed        : str   = ICON_PLAYING
 
-        if owner is not None:
-            self.owner = owner
-        else:
-            self.owner                  = self._session_bus.get_name_owner(bus_name)
-            self._obj                   = self._session_bus.get_object(self.bus_name, '/org/mpris/MediaPlayer2')
-            self._properties_interface  = dbus.Interface(self._obj, dbus_interface='org.freedesktop.DBus.Properties')
-            self._introspect_interface  = dbus.Interface(self._obj, dbus_interface='org.freedesktop.DBus.Introspectable')
-            self._media_interface       = dbus.Interface(self._obj, dbus_interface='org.mpris.MediaPlayer2')
-            self._player_interface      = dbus.Interface(self._obj, dbus_interface='org.mpris.MediaPlayer2.Player')
-            self._introspect            = self._introspect_interface.get_dbus_method('Introspect', dbus_interface=None)
-            self._getProperty           = self._properties_interface.get_dbus_method('Get', dbus_interface=None)
-            self._playerPlay            = self._player_interface.get_dbus_method('Play', dbus_interface=None)
-            self._playerPause           = self._player_interface.get_dbus_method('Pause', dbus_interface=None)
-            self._playerPlayPause       = self._player_interface.get_dbus_method('PlayPause', dbus_interface=None)
-            self._playerStop            = self._player_interface.get_dbus_method('Stop', dbus_interface=None)
-            self._playerPrevious        = self._player_interface.get_dbus_method('Previous', dbus_interface=None)
-            self._playerNext            = self._player_interface.get_dbus_method('Next', dbus_interface=None)
-            self._playerRaise           = self._media_interface.get_dbus_method('Raise', dbus_interface=None)
-            self._signals               = dict()
+        if owner != None: self.owner = owner
+        else:             self.owner = self._session_bus.get_name_owner(bus_name)
 
-            self.refreshPosition()
-            self.refreshStatus()
-            self.refreshMetadata()
+        self._obj                  = self._session_bus.get_object(self.bus_name, '/org/mpris/MediaPlayer2')
+        self._properties_interface = dbus.Interface(self._obj, dbus_interface='org.freedesktop.DBus.Properties')
+        self._introspect_interface = dbus.Interface(self._obj, dbus_interface='org.freedesktop.DBus.Introspectable')
+        self._media_interface      = dbus.Interface(self._obj, dbus_interface='org.mpris.MediaPlayer2')
+        self._player_interface     = dbus.Interface(self._obj, dbus_interface='org.mpris.MediaPlayer2.Player')
+        self._introspect           = self._introspect_interface.get_dbus_method('Introspect', dbus_interface=None)
+        self._getProperty          = self._properties_interface.get_dbus_method('Get', dbus_interface=None)
+        self._playerPlay           = self._player_interface.get_dbus_method('Play', dbus_interface=None)
+        self._playerPause          = self._player_interface.get_dbus_method('Pause', dbus_interface=None)
+        self._playerPlayPause      = self._player_interface.get_dbus_method('PlayPause', dbus_interface=None)
+        self._playerStop           = self._player_interface.get_dbus_method('Stop', dbus_interface=None)
+        self._playerPrevious       = self._player_interface.get_dbus_method('Previous', dbus_interface=None)
+        self._playerNext           = self._player_interface.get_dbus_method('Next', dbus_interface=None)
+        self._playerRaise          = self._media_interface.get_dbus_method('Raise', dbus_interface=None)
+        self._signals              = dict()
+
+        self.refreshPosition()
+        self.refreshStatus()
+        self.refreshMetadata()
 
         if connect:
             self.printStatus()
@@ -328,6 +327,7 @@ class PlayerManager:
 
     def onChangedProperties(self, interface: dbus.String, properties: dbus.Dictionary, signature: dbus.Array, sender: str = None) -> None:
         # print("interface: ", type(interface), ", properties: ", type(properties), ", signature: ", type(signature), ", sender: ", type(sender))
+        # print("interface: ", interface, ", properties: ", properties, ", signature: ", signature, ", sender: ", sender)
         if sender in self.players:
             player = self.players[sender]
             # If we know this player, but haven't been able to set up a signal handler
@@ -358,6 +358,7 @@ class PlayerManager:
             player_bus_owner: str = self._session_bus.get_name_owner(player_bus_name)
             if owner == player_bus_owner:
                 return player_bus_name
+        return None
 
     def busNameIsAPlayer(self, bus_name: str) -> bool:
         if bus_name.startswith('org.mpris.MediaPlayer2') == False:
