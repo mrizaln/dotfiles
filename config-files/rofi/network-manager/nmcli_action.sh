@@ -29,7 +29,6 @@ get_status()
     esac
 }
 
-
 get_list()
 {
     head="$(nmcli device wifi list ifname ${device} | head -1)"
@@ -51,7 +50,6 @@ get_list()
     done < <(nmcli device wifi list ifname "$device" | tail +2)
 }
 
-
 prompt()
 {
     if [[ "$1" == "password" ]]; then
@@ -61,6 +59,16 @@ prompt()
     rofi -i $add -no-fixed-num-lines -theme "${dir}/prompt.rasi" -dmenu -p "${1}: "
 }
 
+connect_hidden()
+{
+    ssid="$1"
+    password="$2"
+
+    nmcli connection add type wifi con-name "$ssid" ifname "$device" ssid "$ssid" #&&\
+    nmcli connection modify "$ssid" wifi-sec.key-mgmt wpa-psk #&&\
+    nmcli connection modify "$ssid" wifi-sec.psk "$password" #&&\
+    nmcli connection up "$ssid"
+}
 
 connect()
 {
@@ -70,7 +78,7 @@ connect()
 
     if [[ "$ssid" == "" ]]; then
         exit 0;
-    elif [[ "$ssid" == "hidden" ]]; then
+    elif [[ "$ssid" == "[hidden]" ]]; then
         ssid="$(prompt "ssid")"
         hidden="yes"
     else
@@ -92,7 +100,7 @@ connect()
             exit 0
         fi
         notify-send "connecting..."
-        result=$(nmcli device wifi connect "$ssid" password "$password" hidden "$hidden" 2>&1)
+        result=$(connect_hidden "$ssid" "$password" 2>&1)
     else
         notify-send "connecting..."
         result=$(nmcli device wifi connect "$ssid" 2>&1)
@@ -101,14 +109,13 @@ connect()
     notify-send "$result"
 }
 
-
 status=$(get_status)
 [ $? -ne 0 ] && exit 1
 
-list=$(echo -e "$(get_list) \ndisconnect")
+list=$(echo -e "$(get_list)\n[disconnect]\n[hidden]")
 
 ssid="$(echo "$list" | $rofi_command -dmenu -markup-rows -i -p "$status")"
-if [[ "$ssid" == disconnect ]]; then
+if [[ "$ssid" == "[disconnect]" ]]; then
     msg=$(nmcli device disconnect "$device")
     notify-send "$msg"
     exit 0
