@@ -55,25 +55,52 @@ require('packer').startup(function()
     -- parser
     use {
         'nvim-treesitter/nvim-treesitter',
-        -- config = function() require("plugin-configs/nvim-treesitter") end
+        config = function() require("plugin-configs/nvim-treesitter") end,
     }
+
+    -- formatter
+    --[[ use {
+        "mhartington/formatter.nvim",
+        config = function() require("plugin-configs/formatter_nvim") end
+    } --]]
 
     -- LSP
     use 'neovim/nvim-lspconfig'
     use {
-        'williamboman/nvim-lsp-installer',
-        requires = { 'neovim/nvim-lspconfig' },
-        -- config = function() require("plugin-configs/nvim-lsp-installer") end
+        "williamboman/mason.nvim",
+        config = function() require("plugin-configs/mason_nvim") end
     }
 
+    -- barbar (tabbed bar)      [ makes nvim segfault ] idk why
+    --[[ use {
+        'romgrk/barbar.nvim',
+        wants = { 'nvim-tree/nvim-web-devicons' },
+        config = function() require("plugin-configs/barbar_nvim") end
+    } --]]
+
     -- cmake
-    use {
+    --[[ use {
         'cdelledonne/vim-cmake',
         config = function() require("plugin-configs/vim-cmake") end
+    } --]]
+    use {
+        "Civitasv/cmake-tools.nvim",
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'mfussenegger/nvim-dap',
+        },
+        config = function() require("plugin-configs/cmake-tools_nvim") end
+    }
+
+    -- ultisnips (snippets engine)
+    use {
+        'SirVer/ultisnips',
+        requires = { 'honza/vim-snippets' },
+        config = function() require("plugin-configs/ultisnips") end
     }
 
     -- nvim-cmp (completion)
-    --[[ use {
+    use {
         'hrsh7th/nvim-cmp',
         requires = {
             'hrsh7th/cmp-nvim-lsp',
@@ -84,13 +111,15 @@ require('packer').startup(function()
             'quangnguyen30192/cmp-nvim-ultisnips'   -- required by ultisnips
         },
         config = function() require("plugin-configs/nvim-cmp") end
-    } --]]
+    }
 
     -- coq (completion)
-    use {
+    --[[ use {
         'ms-jpq/coq_nvim',
-        branch = 'coq'
-    }
+        branch = 'coq',
+        requires = { 'ms-jpq/coq.artifacts' },
+        -- config = function() require("plugin-configs/coq_nvim") end
+    } --]]
     ---------
 
 end)

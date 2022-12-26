@@ -5,13 +5,29 @@ local function nkeymap(key, map, opts)
     if opts == nil then opts = {} end
     keymap('n', key, map, opts)
 end
+local function ikeymap(key, map, opts)
+    if opts == nil then opts = {} end
+    keymap('i', key, map, opts)
+end
+local function vkeymap(key, map, opts)
+    if opts == nil then opts = {} end
+    keymap('v', key, map, opts)
+end
+
 
 -- save on ctrl+s
 keymap('n', '<c-s>', ':w<CR>', {})
 keymap('i', '<c-s>', '<Esc>:w<CR>a', {})
 
--- move between pane
 local opts = { noremap = true }
+
+-- move line or visually selected block
+ikeymap('<A-j>', '<Esc>:m .+1<cr>==gi', opts)
+ikeymap('<A-k>', '<Esc>:m .-2<cr>==gi', opts)
+vkeymap('<A-j>', ":m '>+1<cr>gv=gv", opts)
+vkeymap('<A-k>', ":m '<-2<cr>gv=gv", opts)
+
+-- move between pane
 nkeymap('<c-j>', '<c-w>j', opts)
 nkeymap('<c-h>', '<c-w>h', opts)
 nkeymap('<c-k>', '<c-w>k', opts)

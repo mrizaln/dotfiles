@@ -7,12 +7,13 @@ require('keybindings')
 require('plugins')
 require('global')
 require('lsp_setup')
+require('dap_setup')
 
-vim.cmd [[:COQnow -s]]
+--vim.cmd [[:COQnow -s]]
 
 -- this is a cool function
 local function blah()
-    print "hello world\n"
+    print "It appears that you are not using Linux as your system\n"
 end
 
 -- determine host OS

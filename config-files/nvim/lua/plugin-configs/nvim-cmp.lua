@@ -1,6 +1,6 @@
 -- make sure nvim-cmp is installed
 
-local cmp = require'cmp'
+local cmp = require('cmp')
 
 cmp.setup({
     snippet = {
@@ -21,7 +21,9 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<cr>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior, count = 1 }),
+        ['<S-tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior, count = 1 }),
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -61,9 +63,3 @@ cmp.setup.cmdline(':', {
     })
 })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['sumneko_lua'].setup {
-    capabilities = capabilities
-}

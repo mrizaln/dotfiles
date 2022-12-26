@@ -13,6 +13,7 @@ vim.opt.number = true
 vim.opt.clipboard = 'unnamedplus'   -- use system clipboard
 vim.opt.cursorline = true           -- highlight current line
 vim.opt.ttyfast = true              -- speed up scrolling
+
 vim.cmd [[set cc=90]]             -- 90 column border
 
 -- folding

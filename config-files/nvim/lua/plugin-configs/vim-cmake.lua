@@ -6,4 +6,7 @@ keymap('', '<leader>cq', ':CMakeClose<cr>', {})
 keymap('', '<leader>cc', ':CMakeClean<cr>', {})
 
 vim.cmd [[let g:cmake_link_compile_commands = 1]]
+vim.cmd [[let g:cmake_build_dir_location = '.']]
+-- vim.cmd [[let g:cmake_log_file = "VIM_CMAKE_LOG"]]
+-- vim.cmd [[let g:cmake_log_level = TRACE]]
 -- vim.cmd [[let g:cmake_generate_options = ['-DCMAKE_EXPORT_COMPLILE_COMMANDS=ON']
