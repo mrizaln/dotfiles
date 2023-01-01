@@ -6,5 +6,3 @@ local opts = { noremap = true }
 keymap('n', '<leader>t', ':NvimTreeToggle<cr>', opts)
 keymap('n', '<leader>r', ':NvimTreeRefresh<cr>', opts)
 keymap('n', '<leader>n', ':NvimTreeFindFile<cr>', opts)
-
-print("HI from nvim-tree")

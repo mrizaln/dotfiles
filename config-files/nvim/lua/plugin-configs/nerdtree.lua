@@ -4,8 +4,8 @@ local function nkeymap(key, map, opts)
     keymap('n', key, map, opts)
 end
 
-optss = { noremap = true }
-nkeymap('<c-t>', ':NERDTreeToggle<cr>', optss)
+local opts = { noremap = true }
+nkeymap('<c-t>', ':NERDTreeToggle<cr>', opts)
 
 -- nnoremap <leader>n :NERDTreeFocus<CR>
 -- nnoremap <C-n> :NERDTree<CR>
