@@ -14,11 +14,12 @@ vim.opt.clipboard = 'unnamedplus'   -- use system clipboard
 vim.opt.cursorline = true           -- highlight current line
 vim.opt.ttyfast = true              -- speed up scrolling
 
-vim.cmd [[set cc=90]]             -- 90 column border
+vim.cmd [[set cc=90]]               -- 90 column border
 
 -- folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable= false           -- Disable folding at startup.
 
 
 -- color scheme

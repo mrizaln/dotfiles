@@ -11,10 +11,10 @@ require('packer').startup(function()
     -- quality of life --
     ---------------------
     -- vimwiki
-    use {
+    --[[ use {
         'vimwiki/vimwiki',
         config = function() require("plugin-configs/vimwiki") end
-    }
+    } --]]
 
     -- alpha (start screen)
     use {
@@ -30,17 +30,17 @@ require('packer').startup(function()
     }
 
     -- folder treeview
-    --[[ use {                      -- nvim-tree requires nvim >= 0.8.0 --
+    use {                      -- nvim-tree requires nvim >= 0.8.0 --
         'nvim-tree/nvim-tree.lua',
         requires = { 'nvim-tree/nvim-web-devicons' },
         config = function() require("plugin-configs/nvim-tree") end
-    } --]]
+    }
 
-    use {                           -- alternative to nvim-tree --
+    --[[ use {                           -- alternative to nvim-tree --
         'preservim/nerdtree',
         requires = { 'ryanoasis/vim-devicons' },
         config = function() require("plugin-configs/nerdtree") end
-    }
+    } --]]
 
     -- telescope
     use {
@@ -48,10 +48,48 @@ require('packer').startup(function()
         requires = { 'nvim-lua/plenary.nvim' },
         config = function() require("plugin-configs/telescope_nvim") end
     }
+
+    -- barbar (tabbed bar)      [ makes nvim segfault ] idk why
+    use {
+        'romgrk/barbar.nvim',
+        wants = { 'nvim-tree/nvim-web-devicons' },
+        config = function() require("plugin-configs/barbar_nvim") end
+    }
+
+    -- twilight (dim inactive part of code being edited)
+    --[[ use {
+        'folke/twilight.nvim',
+        config = function() require("plugin-configs/twilight_nvim") end,
+    } --]]
+
+    -- indentation guide
+    use {
+        "lukas-reineke/indent-blankline.nvim",
+        config = function() require("plugin-configs/indent-blankline_nvim") end
+    }
+
+    -- rainbow bracket colors
+    use {
+        "p00f/nvim-ts-rainbow",
+        config = function() require("plugin-configs/nvim-ts-rainbow") end
+    }
     ---------------------
 
     -- IDE --
     ---------
+    -- LSP
+    use 'neovim/nvim-lspconfig'
+    use {
+        "williamboman/mason.nvim",
+        config = function() require("plugin-configs/mason_nvim") end
+    }
+
+    -- dap
+    use {
+        'mfussenegger/nvim-dap',
+        config = function() require("plugin-configs/nvim-dap") end,
+    }
+
     -- parser
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -64,32 +102,25 @@ require('packer').startup(function()
         config = function() require("plugin-configs/formatter_nvim") end
     } --]]
 
-    -- LSP
-    use 'neovim/nvim-lspconfig'
-    use {
-        "williamboman/mason.nvim",
-        config = function() require("plugin-configs/mason_nvim") end
-    }
-
-    -- barbar (tabbed bar)      [ makes nvim segfault ] idk why
-    --[[ use {
-        'romgrk/barbar.nvim',
-        wants = { 'nvim-tree/nvim-web-devicons' },
-        config = function() require("plugin-configs/barbar_nvim") end
-    } --]]
-
-    -- cmake
+     -- cmake
     --[[ use {
         'cdelledonne/vim-cmake',
         config = function() require("plugin-configs/vim-cmake") end
     } --]]
-    use {
+    --[[ use {
         "Civitasv/cmake-tools.nvim",
-        requires = {
-            'nvim-lua/plenary.nvim',
-            'mfussenegger/nvim-dap',
-        },
+        requires = { 'nvim-lua/plenary.nvim', },
         config = function() require("plugin-configs/cmake-tools_nvim") end
+    } --]]
+
+    -- neovim-tasks
+    use {
+        "Shatur/neovim-tasks",
+        requires = {
+            'mfussenegger/nvim-dap',
+            'nvim-lua/plenary.nvim',
+        },
+        config = function() require("plugin-configs/neovim-tasks") end
     }
 
     -- ultisnips (snippets engine)

@@ -8,6 +8,7 @@ require('plugins')
 require('global')
 require('lsp_setup')
 require('dap_setup')
+require('my_utils')
 
 --vim.cmd [[:COQnow -s]]
 
