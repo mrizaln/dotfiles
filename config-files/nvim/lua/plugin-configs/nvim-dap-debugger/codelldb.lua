@@ -15,7 +15,7 @@ dap.adapters.codelldb = {
 ------------------------------------------------------------------------]]
 
 -- use this if you install codelldb using mason.nvim
-local executable_path = os.getenv("HOME")..".local/share/nvim/mason/bin/codelldb"
+local executable_path = os.getenv("HOME").."/.local/share/nvim/mason/bin/codelldb"
 
 -- launch automatically (codelldb >= v1.7.0)
 dap.adapters.codelldb = {
@@ -31,7 +31,7 @@ dap.adapters.codelldb = {
   }
 }
 ------------------------------------------------------------------------------------------
-FILE_TO_DEBUG = [[/tmp/traffic/cmake_build_Debug/simulation]]
+
 ---------------------------------[[ Configuration ]]--------------------------------------
 -- [  codelldb manual:  https://github.com/vadimcn/vscode-lldb/blob/master/MANUAL.md  ] --
 -- cpp
@@ -40,12 +40,11 @@ dap.configurations.cpp = {
     name = "Launch file",
     type = "codelldb",
     request = "launch",
-    program = function() return FILE_TO_DEBUG end,
-    --program = function()
-    --    local file_path = vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    --    print(string.format([[%s]], file_path))
-    --    return string.format([[%s]], file_path)
-    --end,
+    program = function()
+        local file_path = vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        print(string.format([[%s]], file_path))
+        return string.format([[%s]], file_path)
+    end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
   },

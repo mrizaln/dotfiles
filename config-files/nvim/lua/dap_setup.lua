@@ -1,4 +1,7 @@
 -- Debug Adapter Protocol configurations --
 
--- C/C++/Rust
-require("plugin-configs/nvim-dap/codelldb");
+-- C/C++/Rust (using codelldb)
+require("plugin-configs/nvim-dap-debugger/codelldb");
+
+
+
