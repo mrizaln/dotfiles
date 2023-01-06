@@ -71,14 +71,16 @@ bspc rule -a jetbrains-studio state=floating
 #Auto-Start
 lxpolkit &
 kdeconnect-indicator &
+ibus-daemon -d &
 
-wal -R -n -a 60 &
+wal -R -n -a 60
 bash "$HOME/.config/polybar/launch.sh" &
 picom --config "$HOME/.config/picom.conf" &
 
 brightnessctl -r &
 brightnessctl -s &
 sct 5500 &
+
 
 [ -f "$HOME/.config/current_wallpaper" ] && feh --bg-fill "$HOME/.config/current_wallpaper" || feh --bg-fill "$HOME/.config/default_wallpaper"
 # change_wallpaper.sh --random-scheme

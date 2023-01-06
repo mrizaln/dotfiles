@@ -1,5 +1,6 @@
 config-files/*
 config-files/rofi/calendar/*ics
+config-files/nvim/plugged
 **/__pycache__
 **/.*
 

@@ -7,11 +7,14 @@ Xft.hintstyle:                  hintfull
 Xft.rgba:                       rgb
 Xft.lcdfilter:                  lcddefault
 
-#define FONT Fira Code
+!#define FONT Fira Code
+#define FONT JetBrainsMono NF
 !#define FONT Ubuntu Mono
 #define ICON FiraCode Nerd Font Mono
+!#define ICON JetBrainsMono Nerd Font
 #define EMOJI Noto Color Emoji
-#define NERD_FONT Font Awesome 5 Free Solid
+!#define NERD_FONT Font Awesome 5 Free Solid
+#define NERD_FONT JetBrainsMono Nerd Font Mono
 !Font Awesome 5 Brands
 #define FONT_SIZE 10.5
 #define ICON_SIZE 11
@@ -28,13 +31,14 @@ URxvt.boldItalicFont: xft:FONT:style=Bold Italic:size=FONT_SIZE:antialias=true, 
 
 URxvt.depth:                    32
 URxvt*lineSpace:                -5
-URxvt*letterSpace:              -1
+URxvt*letterSpace:              -1.5
 URxvt.iso14755:                 false
 URxvt.iso14755_52:              false
 URxvt*geometry:                 90x25
 URxvt.scrollBar:                false
 URxvt*loginShell:               true
 URxvt.internalBorder:           10
+URxvt.borderColor:              #212733
 
 URxvt.perl-ext:                 default,matcher,resize-font
 URxvt.url-launcher:             linkhandler
