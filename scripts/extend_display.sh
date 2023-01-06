@@ -1,12 +1,15 @@
 #!/bin/env bash
 
+BUILT_IN_HEIGHT=768
+BUILT_IN_WIDTH=1366
+
 generate_mode ()
 {
     width=$1
     height=$2
     refresh_rate=$3
 
-    mode=($(cvt $width $height $refresh_rate | tail -1 | cut -d\  -f2-))
+    mode=($(cvt $width $height $refresh_rate | tail -n1 | cut -d\  -f2-))
     mode_identifier=${mode[0]//\"/}                                             # remove double quotation marks
     mode=${mode[@]//\"/}
 
@@ -118,11 +121,11 @@ main ()
     while true; do
         case "$pos" in
             "--above")
-                offset="+0-${height}"
+                offset="+0-${BUILT_IN_HEIGHT}"
                 break
                 ;;
             "--below")
-                offset="+0+${height}"
+                offset="+0+${BUILT_IN_HEIGHT}"
                 break
                 ;;
             "--left-of")
@@ -131,7 +134,7 @@ main ()
                 ;;
             "--right-of")
 #                offset="+${width}+0"
-                offset="+1366+0"
+                offset="+BUILT_IN_WIDTH+0"
                 break
                 ;;
             *)
@@ -150,7 +153,7 @@ main ()
     use_vnc=true
 
     if [[ "$connect_method" = "usb" ]]; then
-        devices=$(adb devices | tail +2 | awk -F ' ' '{print $1}')
+        devices=$(adb devices | tail -n+2 | awk -F ' ' '{print $1}')
         echo "$devices" | cat -n
         devices=($devices)
         read -p "choose device: " num
