@@ -229,7 +229,7 @@ class ProcessArray:
         processNames = dict()       # used to keep track of unique processNames, thus used in order to filter unique processes only
 
         # use a command (linux command) to get processes list (outputs a string)
-        command = f"ps -eo pid,pcpu,pmem,comm | tail +2 | tr -s ' '"       # the command outputs a sorted process by name (comm)
+        command = f"ps -eo pid,pcpu,pmem,comm | tail -n+2 | tr -s ' '"       # the command outputs a sorted process by name (comm)
         result = subprocess\
             .run(command, shell=True, stdout=subprocess.PIPE)\
             .stdout\

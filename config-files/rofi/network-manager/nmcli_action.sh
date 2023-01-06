@@ -47,7 +47,7 @@ get_list()
         signal="$(echo "$line" | cut -b$(( offset_s  ))- | tr -s ' ' | cut -d ' ' -f2)"
 
         echo "$ssid| $signal |"
-    done < <(nmcli device wifi list ifname "$device" | tail +2)
+    done < <(nmcli device wifi list ifname "$device" | tail -n+2)
 }
 
 prompt()
@@ -88,7 +88,7 @@ connect()
     # check whether the computer has connected to the network before (the network details is saved in the computer)
     promt_password=true
     while read c; do
-        if [[ "$c" == "$ssid" ]]; then
+        if [[ "$c" =~ ^${ssid}.* ]]; then
             promt_password=false
             break
         fi

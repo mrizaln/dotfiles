@@ -3,7 +3,7 @@
 * {
     background-color:       @background;
     text-color:             @foreground;
-	font:					"Comfortaa 12";
+	font:					"Ubuntu Mono 12";
 }
 
 @import "colors.rasi"
@@ -22,5 +22,5 @@ window {
 
 entry {
     expand:				    true;
-    text-color:				@normal-foreground;
+    text-color:				@foreground;
 }

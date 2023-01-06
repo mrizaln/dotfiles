@@ -15,27 +15,35 @@
 # full_circle     full_square     full_rounded     full_alt
 # row_circle      row_square      row_rounded      row_alt
 
-theme="drop_square"
+theme="table"
 dir="$HOME/.config/rofi/powermenu"
 
 
-uptime=$(uptime -p | sed -e 's/up //g')
+uptime=$(uptime | awk -F 'up' '{print $2}' | cut -d, -f1)
+uptime=${uptime// /}  # remove any space
 
 rofi_command="rofi -theme $dir/$theme"
 
 # Options
-shutdown="⏻"
-reboot="⟳"
-lock="⊘"
-suspend="⏾"
-logout="⏼"
+# shutdown="⏻"
+# reboot="⟳"
+# lock="⊘"
+# suspend="⏾"
+# logout="⏼"
+
+shutdown="shutdown"
+reboot="reboot"
+lock="lock"
+suspend="suspend"
+logout="logout"
+
 
 # Confirmation
 confirm_exit() {
 	rofi -dmenu\
 		-i\
 		-no-fixed-num-lines\
-		-p "Are You Sure? : "\
+		-p "$1"\
 		-theme $dir/confirm.rasi
 }
 
@@ -49,7 +57,7 @@ action() {
     chosen="$1"
     case $chosen in
         $shutdown)
-    		ans=$(confirm_exit &)
+    		ans=$(confirm_exit "Shutdown? " &)
     		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
     			systemctl poweroff
     		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
@@ -59,7 +67,7 @@ action() {
             fi
             ;;
         $reboot)
-    		ans=$(confirm_exit &)
+    		ans=$(confirm_exit "Reboot? " &)
     		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
     			systemctl reboot
     		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
@@ -73,7 +81,7 @@ action() {
     			betterlockscreen -l &
 #                lock_screen_with_blur_bg.sh
     		elif [[ -f /usr/bin/i3lock ]]; then
-    			i3lock
+    			i3lock -i ~/.config/lock_wallpaper
     		fi
             ;;
         $suspend)
@@ -81,7 +89,7 @@ action() {
 			systemctl suspend
             ;;
         $logout)
-    		ans=$(confirm_exit &)
+    		ans=$(confirm_exit "Logout? " &)
     		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
     			if [[ "$DESKTOP_SESSION" == "Openbox" ]]; then
     				openbox --exit
@@ -101,9 +109,11 @@ action() {
 
 main() {
     # Variable passed to rofi
-    options="$shutdown\n$reboot\n$lock\n$suspend\n$logout"
+    # options="$shutdown\n$reboot\n$lock\n$suspend\n$logout"
+    options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"
 
-    chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 2)"
+
+    chosen="$(echo -e "$options" | $rofi_command -p "Uptime: ($uptime)" -dmenu -selected-row 2)"
 
     action "$chosen"
 }
