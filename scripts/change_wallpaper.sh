@@ -5,18 +5,18 @@ wallpaper_path="$HOME/.config"
 wall="$wallpaper_path/$wallpaper_name"
 
 
-pick_random_wallpaper ()
+pick_random_wallpaper()
 {
-    path_random_wallpaper="$HOME/Pictures/Wallpapers"
+    local path_random_wallpaper="$HOME/Pictures/Wallpapers"
     if [[ "$1" != "" ]]; then path_random_wallpaper="$1"; fi
 
-    num_files=$(ls ~/Pictures/backgrounds/*{jpg,png} -1 | wc -l)
-    wants=$(( 1 + RANDOM % num_files ))                                 # $RANDOM is a feature of bash
-    line=0
+    local num_files=$(ls ~/Pictures/backgrounds/*{jpg,png} -1 | wc -l)
+    local wants=$(( 1 + RANDOM % num_files ))                                 # $RANDOM is a feature of bash
+    local line=0
 
     while read f; do
         line=$(( line + 1 ))
-        file="$f"
+        local file="$f"
         if [[ $line -eq $wants ]]; then
             break
         fi
@@ -25,10 +25,10 @@ pick_random_wallpaper ()
 }
 
 
-set_wallpaper ()
+set_wallpaper()
 {
-    input="$1"
-    output="$2"
+    local input="$1"
+    local output="$2"
 
     # echo $input
     # echo $output
@@ -38,13 +38,12 @@ set_wallpaper ()
     fi
 
     rm "$output"
-    cp "$wallpaper_input" "$wall"
-    feh --bg-fill "$wallpaper_input"
-
+    cp "$input" "$wall"
+    feh --bg-fill "$input"
 }
 
 
-main ()
+main()
 {
     # arg parser
     if [[ "$1" == "" ]]; then
@@ -60,7 +59,24 @@ main ()
         feh --bg-fill "$(pick_random_wallpaper $HOME/Pictures/backgrounds)"
         exit 0
     elif [[ "$1" == "--random-scheme" ]]; then
-        wal -i "$(pick_random_wallpaper $HOME/Pictures/backgrounds)" -b "#212733" -a 60 --saturate 1.0 --backend colorz
+        local dir="$HOME/Pictures/Illust"
+        local files=$(find "$dir" -regex "\.?/.*\.\(jpe?g\|png\)" -type f)
+        local files_list
+        readarray -t files_list <<< "$files"
+
+        local file
+        while true; do
+            local idx=$(( 1 + RANDOM % ${#files_list[@]}))      # $RANDOM is a feature of bash
+            file="${files_list[idx]}"
+            
+            local width; local height
+            read width height < <(identify -format "%w %h\n" "$file")   # identify resolution
+            local threshold_aspect_ratio="1.3"
+            if [[ $(echo "$threshold_aspect_ratio < $width/$height" | bc -l) == 1 ]]; then
+                break;
+            fi
+        done
+        wal -i "$file" -b "#212733" -a 70 --saturate 0.8 #--backend colorz
         exit 0
     fi
 
@@ -75,6 +91,7 @@ main ()
     done
 
     # change to absolute path if not absolute path already
+    local wallpaper_input
     if [ $absolute -eq 0 ]; then
         wallpaper_input="$PWD/$1"
         echo "$wallpaper_input"
@@ -89,9 +106,9 @@ main ()
         exit 1
     fi
 
-    set_wallpaper "$1" "$wall"
+    set_wallpaper "$wallpaper_input" "$wall"
 
-    echo "Wallpaper set to $1"
+    echo "Wallpaper set to $wallpaper_input"
 }
 
 
