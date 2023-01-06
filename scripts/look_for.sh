@@ -40,7 +40,7 @@ fi
 extension="$2"
 
 while read f; do
-    lines=$(GREP_COLORS="ms=1;31;45" grep --color=always -C3 -iE "$phrase" "$f")
+    lines=$(GREP_COLORS="ms=1;31;45" grep --color=always -C3 -iEe "$phrase" "$f")
 
     # if lines is empty, skip
     if [[ "$lines" == "" ]]; then
@@ -60,5 +60,5 @@ while read f; do
     draw_line $(tput cols) "#"          # separator
     echo -e "\n\n\n"
 done < \
-    <(find . -type f | grep -iE "${extension}$") \
+    <(find . -type f | grep -iEe "${extension}$") \
     | less -R

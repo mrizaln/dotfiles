@@ -8,7 +8,7 @@ while read size; do
         size=$(echo "$size/1024" | bc -l)
     fi
     total_size=$(echo "${total_size}+${size}" | bc -l)
-done < <(flatpak list --columns=size | tail +1)
+done < <(flatpak list --columns=size | tail -n+1)
 
 flatpak list --columns=name,size
 

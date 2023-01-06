@@ -26,7 +26,7 @@ backup()
 
     # only make 30 copies
     if [[ $(ls "$BACKUP_DIR/.bash_history"* | wc -l) -ge 30 ]]; then
-        ls -t "$BACKUP_DIR/.bash_history"* | tail +30 | \
+        ls -t "$BACKUP_DIR/.bash_history"* | tail -n+30 | \
         while read f; do
             echo removing $f
             rm "$f"
@@ -38,7 +38,7 @@ restore()
 {
     file="$1"
     if [ -z "$file" ]; then
-        file=$(ls $BACKUP_DIR/.bash_history.* -rt1 | tail -1)
+        file=$(ls $BACKUP_DIR/.bash_history.* -rt1 | tail -n1)
     fi
     if ! [ -e "$file" ]; then
         echo file does not exist

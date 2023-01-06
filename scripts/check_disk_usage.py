@@ -29,7 +29,7 @@ class Partition:
         except:
             progress = 0
 
-        width = terminalWidth - self.PATH_MAX_LEN - self.NAME_MAX_LEN - 20
+        width = terminalWidth - self.PATH_MAX_LEN - self.NAME_MAX_LEN - 40
 
         free = self.size - self.usedSize
         free = f"{formatBytes(free):>6} free"
@@ -47,7 +47,7 @@ class Partition:
 
         if (width - whole_width - 1) < 0:
             part_char = ""
-        bar = "[" + "█" * whole_width + part_char + " " * (width - whole_width - 13) + "]" if terminalWidth >= 100 else ''
+        bar = "[" + "█" * whole_width + part_char + " " * (width - whole_width - 1) + "]" if terminalWidth >= 100 else ''
 
         line = f"{self.name:<{self.NAME_MAX_LEN}} {self.path:<{self.PATH_MAX_LEN}} {size} {bar} ({usedPercentage}) {free}"
         print(line)
@@ -85,7 +85,7 @@ def test():
 
 def main():
     # get list of filesystems
-    command = "df 2> /dev/null | tail +2 | sort -k1"
+    command = "df 2> /dev/null | tail -n+2 | sort -k1"
     result = subprocess\
         .run(command, shell=True, stdout=subprocess.PIPE)\
         .stdout\

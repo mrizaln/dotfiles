@@ -1,6 +1,6 @@
 #!/bin/bash
 
-selected=$(cat .config/calendar | grep -v '#'| tail +4 |awk -F ',' '{print $1 $2}' | rofi -dmenu -i -p '')
+selected=$(cat .config/calendar | grep -v '#'| tail -n+4 |awk -F ',' '{print $1 $2}' | rofi -dmenu -i -p '')
 if [[ "$(echo $selected | tr -s ' ')" == '' ]]; then exit 0; fi
 
 # Open corresponding meeting room, if exists
