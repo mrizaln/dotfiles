@@ -32,13 +32,20 @@ nvim_lsp['sumneko_lua'].setup {
 
 
 -- ccls
-nvim_lsp['ccls'].setup{
+-- nvim_lsp['ccls'].setup{
+--     capabilities = capabilities,
+--     -- root_dir = lsp.util.root_pattern('main.cpp', '.git'),
+--     -- single_file_support = true
+-- }
+-- vim.cmd[[let g:cmake_link_compile_commands = 1]]
+
+-- clangd
+nvim_lsp['clangd'].setup{
     capabilities = capabilities,
     -- root_dir = lsp.util.root_pattern('main.cpp', '.git'),
     -- single_file_support = true
 }
 vim.cmd[[let g:cmake_link_compile_commands = 1]]
-
 
 -- rust_analyzer
 nvim_lsp['rust_analyzer'].setup({
