@@ -1,0 +1,12 @@
+[submodule "submodules/neovim-config"]
+	path = submodules/neovim-config
+	url = git@github.com:mrizaln/neovim-config.git
+[submodule "submodules/i3-vulture-rice"]
+	path = submodules/i3-vulture-rice
+	url = git@github.com:mrizaln/i3-vulture-rice.git
+[submodule "submodules/bspwm-lynx-rice"]
+	path = submodules/bspwm-lynx-rice
+	url = git@github.com:mrizaln/bspwm-lynx-rice.git
+[submodule "submodules/qol-scripts"]
+	path = submodules/qol-scripts
+	url = git@github.com:mrizaln/qol-scripts.git
