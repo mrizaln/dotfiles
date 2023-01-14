@@ -1,0 +1,6 @@
+# bind the up key to query last command invoked based on typed on screen at that time
+"\e[A": history-search-backward
+"\eOA": history-previous-history
+"\e[B": history-search-forward
+"\eOB": history-next-history
+

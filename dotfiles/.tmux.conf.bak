@@ -1,0 +1,56 @@
+set -g mouse on
+
+# fix "nvim 'autoread' may not work"
+set-option -g focus-events on
+
+# reduces escape time
+set-option -sg escape-time 10
+
+# set RGB capability (for nvim on rxvt-unicode term)
+set-option -ga terminal-overrides ',rxvt-unicode-256color:RGB'
+
+# pager
+tmux_commands_with_legacy_scroll="nano less more man git"
+
+# fix color issues
+set -as terminal-overrides ',xterm*:RGB'
+
+# Emulate scrolling by sending up and down keys if these commands are running in the pane
+bind-key -T root WheelUpPane \
+	if-shell -Ft= '#{?mouse_any_flag,1,#{pane_in_mode}}' \
+		'send -Mt=' \
+		'if-shell -t= "#{?alternate_on,true,false} || echo \"#{tmux_commands_with_legacy_scroll}\" | grep -q \"#{pane_current_command}\"" \
+			"send -t= Up" "copy-mode -et="'
+
+bind-key -T root WheelDownPane \
+	if-shell -Ft = '#{?pane_in_mode,1,#{mouse_any_flag}}' \
+		'send -Mt=' \
+		'if-shell -t= "#{?alternate_on,true,false} || echo \"#{tmux_commands_with_legacy_scroll}\" | grep -q \"#{pane_current_command}\"" \
+			"send -t= Down" "send -Mt="'
+
+#-----------------------------------------------------------------------------------------
+#                             [ tmux plugin manager ]
+#-----------------------------------------------------------------------------------------
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-battery'
+
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'github_username/plugin_name#branch'
+# set -g @plugin 'git@github.com:user/plugin'
+# set -g @plugin 'git@bitbucket.com:user/plugin'
+
+
+# plugin settings
+
+#---[ tmux-battery ]---
+#set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
+# set -g status-right '#{battery_status_bg} Batt: #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
+#----------------------
+
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'

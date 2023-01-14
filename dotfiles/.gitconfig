@@ -1,0 +1,11 @@
+[user]
+	email = mrizaln2000@gmail.com
+	name = Muhammad Rizal Nurromdhoni
+[alias]
+	d = difftool
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = false
+[core]
+    editor = nvim
