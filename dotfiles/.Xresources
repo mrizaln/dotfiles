@@ -1,4 +1,4 @@
-Xft.dpi:                        100
+Xft.dpi:                        90
 Xft.antialias:                  1
 Xft.autohint:                   1
 Xft.hinting:                    true
@@ -29,7 +29,7 @@ URxvt.boldItalicFont: xft:FONT:style=Bold Italic:size=FONT_SIZE:antialias=true, 
 
 URxvt.depth:                    32
 !URxvt*lineSpace:                -5
-URxvt*lineSpace:                -5
+URxvt*lineSpace:                0
 !URxvt*letterSpace:              -1.5       // broken for Nerd Fonts
 URxvt*letterSpace:              0
 URxvt.iso14755:                 false
@@ -37,7 +37,7 @@ URxvt.iso14755_52:              false
 URxvt*geometry:                 90x25
 URxvt.scrollBar:                false
 URxvt*loginShell:               true
-URxvt.internalBorder:           10
+URxvt.internalBorder:           5
 !URxvt.borderColor:              #212733
 
 URxvt.perl-ext:                 default,matcher,resize-font
@@ -152,18 +152,3 @@ xterm.vt100.faceSize: 9
 
 ! stop output to terminal from jumping down to bottom of scroll again
 XTerm*scrollTtyOutput: false
-
-
-! xst configs
-!st.font: spectrum berry:pixelsize=12:antialias=false:autohint=false;,Cozette:pixelsize=12:antialias=false:autohint=false;,Twemoji:pixelsize=10:antialias=true:autohint=true;,FiraCode Nerd Font Mono:pixelsoze=10:antialias=true:autohint=true
-st.font: monospace:pixelsize=20:antialias=true:autohint=true
-st.alpha: 1
-st.borderpx: 44
-st.cursorshape: 3
-st.disablebold: 0
-st.disableitalics: 0
-st.boxdraw: 1
-st.boxdraw_bold: 1
-st.boxdraw_braille: 1
-st.chscale:           1.0
-st.cwscale:           1.0

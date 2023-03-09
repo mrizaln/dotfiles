@@ -136,8 +136,10 @@ fi
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.
 # Not supported in the "fish" shell.
-(cat ~/.cache/wal/sequences &)
-#. "$HOME/.cargo/env"
+# (cat ~/.cache/wal/sequences &)
+
+# load cargo
+. "$HOME/.cargo/env"
 
 # fff enable cd on exit (q) [ctrl+c to exit without cd]
 f() {
@@ -145,3 +147,7 @@ f() {
     cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
 }
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

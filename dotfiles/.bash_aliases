@@ -72,12 +72,31 @@ alias nmv=mv_ln
 nvidia_run()
 {
     local dgpu=$(lspci | grep "3D controller:" | cut -d\  -f2-4 | cut -d: -f2)
-    if [[ $dgpu == NVIDIA ]]; then
+    if [[ ${dgpu// /} == NVIDIA ]]; then     # remove any whitespace
         __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"
     else
         echo "No NVIDIA dGPU found"
     fi
 }
+
+# alias 'npx tsc' for easier call and similar to when call 'node'
+node_run_ts()
+{
+    local file="$1"
+    if [[ "${file:$((${#file}-2))}" != "ts" ]]; then
+        echo "Not a ts file";
+        return 1
+    fi
+
+    local js_file="${file:0:$((${#file}-2))}js"
+    echo -e "compiling to: [$js_file]\n"
+    npx tsc "$file"
+
+    if [[ $? != 0 ]]; then return; fi
+
+    node "$js_file"
+}
+alias nodet="node_run_ts"
 
 # make du command human-readable without explicitly type the option
 alias du='du -h'
@@ -95,14 +114,17 @@ alias libroff_conv='libreoffice --headless --convert-to pdf'
 alias yt_down_vid='youtube-dl'              # as video (best quality)
 alias yt_down_mp3='youtube-dl -x --audio-format mp3'    # as audio (mp3)
 
-# aliasing python3 as python
-#alias python='python3'
-
 # aliasing nanora.sh as nanora
 alias nanora='nanora.sh'
 
 # aliasing du to print in sorted-human-readable format
 alias du_sorted='du -hd1 | sort -h'
+
+# check disk usage
+alias cdisk='~/.local/bin/check_disk_usage.py'
+
+# htop but gpu
+alias gtop='watch -n1 nvidia-smi'
 
 # aliasing feh to open in certain geometry and other control
 alias fehh="feh -g 960x540 -d --scale-down --start-at"
@@ -131,4 +153,9 @@ alias nvim-old="nvim -u ~/.config/nvim/init.vim.bak"
 alias nvim-minimal="nvim -u ~/.config/nvim/init.vim.minimal"
 
 # aliases nvimdiff (idk why it didn't shipped with nvim package
-#alias nvimdiff="nvim -d"
+alias nvimdiff="nvim -d"
+
+# why discord use capitalize its name?
+if which Discord &> /dev/null; then
+    alias discord=Discord
+fi

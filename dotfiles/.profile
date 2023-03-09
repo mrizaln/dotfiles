@@ -27,10 +27,22 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # set PATH to include system binary
-PATH="$PATH:/usr/sbin:/sbin"
+# if [ -d /usr/sbin ] ; then
+# PATH="/usr/sbin:/sbin:$PATH"
+# fi
 
 # set PATH to include android studio
-PATH="$PATH:/home/mrizaln/android-studio/bin"
+# PATH="$HOME/android-studio/bin:$PATH"
+
+# add Mason bin to PATH
+if [ -d "$HOME/.local/share/nvim/mason/bin" ] ; then
+    PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+fi
+
+# add application installed downloaded manually
+if [ -d "$HOME/Apps/bin" ]; then
+    PATH="$HOME/Apps/bin:$PATH"
+fi
 
 # to fix some java application window not rendering properly
 if [[ "$XDG_SESSION_DESKTOP" = "bspwm" || "$DESKTOP_SESSION" = "bspwm" ]] ; then
@@ -39,9 +51,10 @@ if [[ "$XDG_SESSION_DESKTOP" = "bspwm" || "$DESKTOP_SESSION" = "bspwm" ]] ; then
 fi
 
 # to enable IME on kitty terminal
-#if [[ "$TERM" == "xterm-kitty" ]]; then
+if [[ "$TERM" == "xterm-kitty" ]]; then
     export GLFW_IM_MODULE=ibus
-#fi
+    export GTK_IM_MODULE=ibus
+fi
 
 # fix scaling issues qt
 export QT_ENABLE_HIGHDPI_SCALING=0
@@ -49,10 +62,22 @@ export QT_ENABLE_HIGHDPI_SCALING=0
 # fix anki scaling issue
 export ANKI_NOHIGHDPI=1
 
-# fix gtk4 application not using Nordic theme
-export GTK_THEME=Nordic
-
-. "$HOME/.cargo/env"
+# fix gtk4 application not using Nordic theme (breaks GNOME 43 spacing)
+# https://github.com/EliverLara/Nordic/issues/237
+if [[ "$DESKTOP_SESSION" == i3 ]]; then
+    export GTK_THEME=Nordic
+# else
+    # export GTK_THEME=Nordic-darker-v40
+fi
 
 # force qt to use kvantum themes
 export QT_STYLE_OVERRIDE=kvantum
+
+# use nvim as editor
+if which nvim &> /dev/null; then
+    export VISUAL=nvim
+    export EDITOR="$VISUAL"
+else
+    export VISUAL=vi
+    export EDITOR="$VISUAL"
+fi
