@@ -1,0 +1,64 @@
+"" Source your .vimrc
+source ~/.vimrc
+
+set scrolloff=999
+
+"--------------------------------[ plugins ]----------------------------------"
+" nerdtree "
+set NERDTree
+"-----------------------------------------------------------------------------"
+
+"--------------------------------[ mappings ]---------------------------------"
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+"" remap ctrl_v to paste in insert mode
+inoremap <C-v> <C-r>*
+
+"" fold all except topmost
+nmap za zCzo
+
+" o and O now create newline without going into insert mode
+"nnoremap o o<Esc>
+"nnoremap O O<Esc>
+
+"" add "disable formatting specifier" on blocked text
+vnoremap <leader>fd <Esc>o// @formatter:on<Esc>gvO<Esc>O// @formatter:off<Esc>gvO<Esc>
+
+"" center view
+sethandler <C-Z> n-v:ide i:vim
+inoremap <C-Z> <Esc>zza
+
+"" map IDE action
+nmap gt <Action>(GotoTypeDeclaration)
+nmap gr <Action>(ShowUsages)
+nmap gR <Action>(FindUsages)
+nmap gl <Action>(ActivateLogcatToolWindow)
+nmap ge <Action>(ActivateProblemsViewToolWindow)
+
+nmap <leader>cc <Action>(Android.SyncProject)
+nmap <leader>cr <Action>(Run)
+nmap <leader>cd <Action>(Debug)
+nmap <leader>ct <Action>(GotoTest)
+nmap <leader>cq <Action>(HideActiveWindow)
+
+nmap <leader>hh <Action>(HideAllWindows)
+
+nmap <leader>ss <Action>(FileStructurePopup)
+nmap <leader>sf <Action>(GotoFile)
+nmap <leader>sr <Action>(RecentFiles)
+nmap <leader>sh <Action>(ActivateStructureToolWindow)
+
+nmap <leader>rr <Action>(IdeaVim.ReloadVimRc.reload)
+nmap <leader>rn <Action>(RenameElement)
+
+nmap <leader>ff <Action>(ReformatCode)
+
+nmap <leader>af <Action>(ShowIntentionActions)
+
+nmap <leader>b <Action>(ToggleLineBreakpoint)
+
+nmap <leader>` <Action>(ActivateTerminalToolWindow)
+
+nmap <space>e <Action>(ShowErrorDescription)
+"-----------------------------------------------------------------------------"
