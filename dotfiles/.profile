@@ -81,3 +81,6 @@ else
     export VISUAL=vi
     export EDITOR="$VISUAL"
 fi
+
+# set JAVA_HOME
+# export JAVA_HOME=/home/mrizaln/.sdkman/candidates/java/current
