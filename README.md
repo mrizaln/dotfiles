@@ -1,4 +1,4 @@
-# custom-desktop
+# dotfiles
 
 Config files and scripts of my linux desktop environment
 
