@@ -10,6 +10,28 @@ _cdl() {
 }
 alias cdl=_cdl
 
+# have you ever been deep inside a file strucure? yeah, like java project file strucuture.
+# fear no more, you can use this command to go up the directory structure many times you like
+_cd_up_many_times() {
+    if [[ $1 == ?(-)+([0-9]) ]]; then
+        echo "from: $(pwd)"
+        local N="$1"
+        cd $(for i in $(seq $N); do echo -n "../"; done)
+        echo "to  : $(pwd)"
+    elif [[ -z "$1" ]]; then
+        echo "usage: <this_command> <NUM>"
+    else
+        echo "enter number, not string"
+    fi
+}
+alias cd..=_cd_up_many_times
+
+alias -- -='cd -'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
 lll(){ ( ls -lahF "$@" --color=always | grep "\->" | tr -s " " | cut -d\  -f9- | awk -F '->' '{print $1 " :-> " $2}' | column -s ':' -t -l2 ) }     # list link files; not alias but, eh
 
 llld(){ find "$HOME" -maxdepth 3 -lname "*$1*" -exec ls -lFhd --color=always {} \; | tr -s " " | cut -d\  -f9- | awk -F '-> ' '{print $1 ":->\t" $2}' | column -s ':' -t -l2; }
@@ -80,19 +102,13 @@ alias gtop='watch -n1 nvidia-smi'
 # aliasing feh to open in certain geometry and other control
 alias fehh="feh -g 960x540 -d --scale-down --start-at"
 
-# alising time(1) because more than one program exist with the same name
-alias timee="$(which time) -f '\t%E real,\t%U user,\t%S sys,\t%K amem,\t%M mmem'"
-
-# git push but before that copies git token first
-alias git_pushh="git_token_copy.sh; git push"
+# # alising time(1) because more than one program exist with the same name
+# alias timee="$(which time) -f '\t%E real,\t%U user,\t%S sys,\t%K amem,\t%M mmem'"
 
 # alias for anki from flatpak
 #if [ -e /var/lib/flatpak/app/net.ankiweb.Anki/current/active/files/bin/anki ]; then
-    alias anki="ANKI_NOHIGHDPI=1 flatpak run net.ankiweb.Anki"
+    # alias anki="ANKI_NOHIGHDPI=1 flatpak run net.ankiweb.Anki"
 #fi
-
-# android studio
-alias android_studio_launch='JAVA_AWT_WM_NONREPARENTING=1 ~/android-studio/bin/studio.sh'
 
 # alias for easier access to vi config
 alias viconfig="vi ~/.config/nvim/init.lua"
@@ -101,13 +117,14 @@ alias viconfig="vi ~/.config/nvim/init.lua"
 alias nvim-old="nvim -u ~/.config/nvim/init.vim.bak"
 
 # openg nvim using a minimal configuration
-alias nvim-minimal="nvim -u ~/.config/nvim/init.vim.minimal"
+# alias nvim-minimal="nvim -u ~/.config/nvim/init.vim.minimal"
+alias nvim-minimal='nvim --cmd "let g:init_should_skip_lsp = v:true"'
 
 # aliases nvimdiff (idk why it didn't shipped with nvim package
-alias nvimdiff="nvim -d"
+alias nvimdiff='nvim-minimal -d'
 
 # aliases nvim that opens :DiffviewOpen
-alias nvim-diffview="nvim -c DiffviewOpen"
+alias nvim-diffview='nvim-minimal -c DiffviewOpen'
 
 # why discord use capitalize its name?
 if which Discord &> /dev/null; then

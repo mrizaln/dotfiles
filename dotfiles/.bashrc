@@ -56,9 +56,20 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+__parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+__build_prompt() {
+    local exit_status="$?"
+    PS1="[$exit_status]-\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[33m\]\$(__parse_git_branch)\[\033[00m\]\$ "
+}
+
 if [ "$color_prompt" = yes ]; then
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    PS1='[$?]-${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1='[$?]-\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1="[$?]-\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[33m\]\$(__parse_git_branch)\[\033[00m\]\$ "
+    PROMPT_COMMAND=__build_prompt
     PROMPT_DIRTRIM=2        # show only current and parent directory
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -66,13 +77,6 @@ fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*|tmux*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -94,6 +98,10 @@ alias lla='ls -halF'
 alias ll='ls -hlF'
 alias la='ls -hAF'
 alias l='ls -hCF'
+
+# run these program in interactive mode
+alias mv="mv -i"
+alias rm="rm -I"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
