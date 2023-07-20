@@ -8,6 +8,10 @@ set scrolloff=999
 set NERDTree
 "-----------------------------------------------------------------------------"
 
+"------------------------------[ configuration ]----------------------------"
+set noignorecase        " set vim to be case sensitive
+"-----------------------------------------------------------------------------"
+
 "--------------------------------[ mappings ]---------------------------------"
 " Don't use Ex mode, use Q for formatting.
 map Q gq
@@ -29,20 +33,31 @@ vnoremap <leader>fd <Esc>o// @formatter:on<Esc>gvO<Esc>O// @formatter:off<Esc>gv
 sethandler <C-Z> n-v:ide i:vim
 inoremap <C-Z> <Esc>zza
 
+"" search currently highlighted text
+vnoremap / y/<c-r>"<cr>N
+
+"" search and replace currently selected text
+vnoremap <leader>r y:%s/<c-r>"/
+
+
 "" map IDE action
 nmap gt <Action>(GotoTypeDeclaration)
 nmap gr <Action>(ShowUsages)
 nmap gR <Action>(FindUsages)
+nmap gh <Action>(HighlightUsagesInFile)
 nmap gl <Action>(ActivateLogcatToolWindow)
 nmap ge <Action>(ActivateProblemsViewToolWindow)
 
 nmap <leader>cc <Action>(Android.SyncProject)
+nmap <leader>cb <Action>(MakeGradleProject)
 nmap <leader>cr <Action>(Run)
 nmap <leader>cd <Action>(Debug)
 nmap <leader>ct <Action>(GotoTest)
 nmap <leader>cq <Action>(HideActiveWindow)
 
 nmap <leader>hh <Action>(HideAllWindows)
+nmap <leader>hs <Action>(HideSideWindows)
+nmap <leader>ha <Action>(HideActiveWindow)
 
 nmap <leader>ss <Action>(FileStructurePopup)
 nmap <leader>sf <Action>(GotoFile)
@@ -51,6 +66,8 @@ nmap <leader>sh <Action>(ActivateStructureToolWindow)
 
 nmap <leader>rr <Action>(IdeaVim.ReloadVimRc.reload)
 nmap <leader>rn <Action>(RenameElement)
+
+nmap <leader>td <Action>(ActivateTODOToolWindow)
 
 nmap <leader>ff <Action>(ReformatCode)
 

@@ -50,6 +50,8 @@ call plug#end()
 
 " nerdtree
 nnoremap <leader>tt :NERDTreeToggle<cr>
+nnoremap <leader>tf :NERDTreeFocus<cr>
+nnoremap <leader>tc :NERDTreeClose<cr>
 
 " floaterm config
 let g:floaterm_opener = 'edit'
