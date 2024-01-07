@@ -136,7 +136,7 @@ font:
     family: JetBrainsMono Nerd Font
     style: Bold Italic
 
-  size: 10.4
+  size: 10
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -736,7 +736,7 @@ cursor:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+# key_bindings:
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
@@ -847,6 +847,11 @@ cursor:
   #- { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
   #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
+
+key_bindings:
+  # https://stackoverflow.com/a/42461580
+  - { key: Return,   mods: Shift,   chars: "\x1b[13;2u" }
+  - { key: Return,   mods: Control, chars: "\x1b[13;5u" }
 
 #debug:
   # Display the time it takes to redraw each frame.
