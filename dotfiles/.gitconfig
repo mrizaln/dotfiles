@@ -1,11 +1,29 @@
 [user]
 	email = mrizaln2000@gmail.com
 	name = Muhammad Rizal Nurromdhoni
+
 [alias]
 	d = difftool
+
 [diff]
 	tool = nvimdiff
+
 [difftool]
 	prompt = false
+
 [core]
     editor = nvim
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    light = false
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
