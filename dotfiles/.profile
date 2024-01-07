@@ -34,10 +34,10 @@ fi
 # set PATH to include android studio
 # PATH="$HOME/android-studio/bin:$PATH"
 
-# add Mason bin to PATH
-if [ -d "$HOME/.local/share/nvim/mason/bin" ] ; then
-    PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
-fi
+# # add Mason bin to PATH
+# if [ -d "$HOME/.local/share/nvim/mason/bin" ] ; then
+#     PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+# fi
 
 # add application installed downloaded manually
 if [ -d "$HOME/Apps/bin" ]; then
@@ -71,7 +71,8 @@ if [[ "$DESKTOP_SESSION" == i3 ]]; then
 fi
 
 # force qt to use kvantum themes
-export QT_STYLE_OVERRIDE=kvantum
+# export QT_STYLE_OVERRIDE=kvantum
+QT_QPA_PLATFORMTHEME=qt5ct
 
 # use nvim as editor
 if which nvim &> /dev/null; then
@@ -84,3 +85,8 @@ fi
 
 # set JAVA_HOME
 # export JAVA_HOME=/home/mrizaln/.sdkman/candidates/java/current
+
+# fix screen sharing on sway on wayland
+if [[ "DESKTOP_SESSION" == "sway" && -z "$XDG_CURRENT_DESKTOP" ]]; then
+    export XDG_CURRENT_DESKTOP=sway
+fi

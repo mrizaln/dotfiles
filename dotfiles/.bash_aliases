@@ -1,14 +1,14 @@
 # more more ls aliases
-alias lh='ls -hdF .?*'       # list only hidden files
-alias llh='ls -hdFl .?*'     # list only hidden files with details
-alias lsd='ls -d */'
+alias lh='ls -vhdF .?*'       # list only hidden files
+alias llh='ls -vhdFl .?*'     # list only hidden files with details
+alias lsd='ls -vd */'
 
 # cd then immediately ls
-_cdl() {
+_cdl_impl() {
     cd "$@"
     ls -hCF
 }
-alias cdl=_cdl
+alias cdl=_cdl_impl
 
 # have you ever been deep inside a file strucure? yeah, like java project file strucuture.
 # fear no more, you can use this command to go up the directory structure many times you like
@@ -42,15 +42,16 @@ if [[ -x ~/.local/bin/move_and_relink.sh ]]; then
 fi
 
 # nvidia run
-nvidia_run()
-{
-    local dgpu=$(lspci | grep "3D controller:" | cut -d\  -f2-4 | cut -d: -f2)
-    if [[ ${dgpu// /} == NVIDIA ]]; then     # remove any whitespace
-        __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"
-    else
-        echo "No NVIDIA dGPU found"
-    fi
-}
+# nvidia_run()
+# {
+#     local dgpu=$(lspci | grep "3D controller:" | cut -d\  -f2-4 | cut -d: -f2)
+#     if [[ ${dgpu// /} == NVIDIA ]]; then     # remove any whitespace
+#         echo ">>> Discrete NVIDIA GPU selected."
+#         __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"
+#     else
+#         echo ">>> No NVIDIA dGPU found"
+#     fi
+# }
 
 # alias 'npx tsc' for easier call and similar to when call 'node'
 node_run_ts()
@@ -118,7 +119,7 @@ alias nvim-old="nvim -u ~/.config/nvim/init.vim.bak"
 
 # openg nvim using a minimal configuration
 # alias nvim-minimal="nvim -u ~/.config/nvim/init.vim.minimal"
-alias nvim-minimal='nvim --cmd "let g:init_should_skip_lsp = v:true"'
+alias nvim-minimal='nvim --cmd "let g:init_minimal = v:true"'
 
 # aliases nvimdiff (idk why it didn't shipped with nvim package
 alias nvimdiff='nvim-minimal -d'
@@ -130,3 +131,30 @@ alias nvim-diffview='nvim-minimal -c DiffviewOpen'
 if which Discord &> /dev/null; then
     alias discord=Discord
 fi
+
+# g++ with -std=c++20
+alias g++20='g++ -std=c++20 -fconcepts-diagnostics-depth=2'
+
+# convert jsonl to json
+to_json() {
+    local file="$1" # accept one input only
+    jq -c --slurp . < "$file" > "${file%.*}.json"
+}
+
+# lazygit
+alias lgit=lazygit
+
+# print PATHs
+alias print_path='echo -e "${PATH//:/\\n}"'
+
+# display ripgrep result in less
+_rgl_impl() {
+    rg -p "$@" | less -RFX
+}
+alias rgl=_rgl_impl
+
+# display ripgrep result in delta
+_rgd_impl() {
+    command env rg --json "$@" | delta
+}
+alias rgd=_rgd_impl
