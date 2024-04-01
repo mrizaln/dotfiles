@@ -1,6 +1,5 @@
 # ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login exists.
 # see /usr/share/doc/bash/examples/startup-files for examples.
 # the files are located in the bash-doc package.
 
@@ -39,7 +38,7 @@ fi
 #     PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 # fi
 
-# add application installed downloaded manually
+# add path to application downloaded manually
 if [ -d "$HOME/Apps/bin" ]; then
     PATH="$HOME/Apps/bin:$PATH"
 fi
@@ -72,11 +71,14 @@ fi
 
 # force qt to use kvantum themes
 # export QT_STYLE_OVERRIDE=kvantum
-QT_QPA_PLATFORMTHEME=qt5ct
+export QT_QPA_PLATFORMTHEME=qt5ct
 
 # use nvim as editor
 if which nvim &> /dev/null; then
     export VISUAL=nvim
+    export EDITOR="$VISUAL"
+elif which vim &> /dev/null; then
+    export VISUAL=vim
     export EDITOR="$VISUAL"
 else
     export VISUAL=vi
@@ -86,7 +88,24 @@ fi
 # set JAVA_HOME
 # export JAVA_HOME=/home/mrizaln/.sdkman/candidates/java/current
 
-# fix screen sharing on sway on wayland
-if [[ "DESKTOP_SESSION" == "sway" && -z "$XDG_CURRENT_DESKTOP" ]]; then
-    export XDG_CURRENT_DESKTOP=sway
-fi
+# # fix screen sharing on sway on wayland
+# # (won't work, set this just before the session start instead e.g. on session file)
+# if [[ "DESKTOP_SESSION" == "sway" && -z "$XDG_CURRENT_DESKTOP" ]]; then
+#     export XDG_CURRENT_DESKTOP=sway
+# fi
+
+# colored GCC warnings and errors (by default it should have color, uncomment if not)
+# export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# export cmake compile_commands.json by default
+export CMAKE_EXPORT_COMPILE_COMMANDS=1
+
+# # ibus
+# export GTK_IM_MODULE=ibus
+# export XMODIFIERS=@im-ibus
+# export QT_IM_MODULE=ibus
+
+# fcitx5
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx

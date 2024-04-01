@@ -76,37 +76,6 @@ else
 fi
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias lla='ls -vhalF'
-alias ll='ls -vhlF'
-alias la='ls -vhAF'
-alias l='ls -vhCF'
-
-# run these program in interactive mode
-alias mv="mv -i"
-alias rm="rm -I"
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -162,17 +131,3 @@ f() {
 
 # set tab size to 4
 tabs 4
-
-# auto completion for nvidia_run.sh script
-#!/bin/bash
-
-_nvidia_run_completion() {
-  local cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=($(compgen -c -- "$cur"))
-}
-
-complete -F _nvidia_run_completion nvidia_run.sh
-
-# ffmpeg alias for nvidia gpu acceleration using nvenc
-# alias ffmpeg_nvenc='ffmpeg -hwaccel cuda -hwaccel_output_format cuda -c:v h264_nvenc -preset slow -rc vbr_hq -cq 19 -b:v 0 -c:a aac -b:a 128k -ac 2 -f mp4'
-alias ffmpeg_nvenc='ffmpeg -hwaccel cuda -hwaccel_output_format cuda -c:a copy -vcodec hevc_nvenc -preset p1 -c:s copy -y'
