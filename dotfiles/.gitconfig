@@ -5,6 +5,9 @@
 [alias]
 	d = difftool
 
+[init]
+    defaultBranch = main
+
 [diff]
 	tool = nvimdiff
 

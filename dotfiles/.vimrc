@@ -11,7 +11,7 @@ set shiftwidth=4            " width for autoindents
 set autoindent              " indent a new line the same amount as the line just typed
 set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completion
-set cc=80                   " set an 80 column border for good coding style
+set cc=80,90,120            " set an 80 column border for good coding style
 set mouse=a                 " enable mouse click
 set clipboard=unnamedplus   " using system clipboard
 set cursorline              " highlight current cursorline
@@ -61,7 +61,7 @@ let g:floaterm_width = 1.0
 let g:floaterm_height = 0.4
 
 " let g:floaterm_keymap_new = '<leader>t'
-let g:floaterm_keymap_toggle = '<leader>c'
+let g:floaterm_keymap_toggle = '<leader>`'
 "nmap <c-t> :FloatermNew fff<cr>
 
 " color scheme
