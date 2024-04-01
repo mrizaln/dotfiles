@@ -1,0 +1,74 @@
+import = ["/home/mrizaln/.config/alacritty/themes/monokai-pro/monokai-pro-alacritty.toml"]
+
+
+[env]
+ALACRITTY_USED = "yes"      # hint for neovim
+TERM = "alacritty"
+
+
+[window]
+decorations = "None"
+dynamic_title = true
+opacity = 0.7
+
+[window.class]
+general = "Alacritty"
+# instance = "Alacritty"
+
+[window.dimensions]
+columns = 128
+lines = 32
+
+[window.padding]
+x = 10
+y = 10
+
+
+[scrolling]
+history = 10000
+
+
+[font]
+size = 10
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "Bold Italic"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.offset]
+x = 0
+y = -2
+
+
+[cursor.style]
+blinking = "Always"
+shape = "Block"
+
+
+# https://stackoverflow.com/a/42461580
+[[keyboard.bindings]]
+chars = "\u001B[13;2u"
+key = "Return"
+mods = "Shift"
+
+# https://stackoverflow.com/a/42461580
+[[keyboard.bindings]]
+chars = "\u001B[13;5u"
+key = "Return"
+mods = "Control"
