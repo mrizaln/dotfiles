@@ -131,3 +131,8 @@ f() {
 
 # set tab size to 4
 tabs 4
+
+# load brew
+if command -v brew &> /dev/null; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi

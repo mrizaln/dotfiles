@@ -30,9 +30,6 @@ fi
 # PATH="/usr/sbin:/sbin:$PATH"
 # fi
 
-# set PATH to include android studio
-# PATH="$HOME/android-studio/bin:$PATH"
-
 # # add Mason bin to PATH
 # if [ -d "$HOME/.local/share/nvim/mason/bin" ] ; then
 #     PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
@@ -74,10 +71,10 @@ fi
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 # use nvim as editor
-if which nvim &> /dev/null; then
+if command -v nvim &> /dev/null; then
     export VISUAL=nvim
     export EDITOR="$VISUAL"
-elif which vim &> /dev/null; then
+elif command -v vim &> /dev/null; then
     export VISUAL=vim
     export EDITOR="$VISUAL"
 else
@@ -99,6 +96,7 @@ fi
 
 # export cmake compile_commands.json by default
 export CMAKE_EXPORT_COMPILE_COMMANDS=1
+export CMAKE_COLOR_DIAGNOSTICS=1
 
 # # ibus
 # export GTK_IM_MODULE=ibus

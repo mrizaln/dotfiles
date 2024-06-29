@@ -1,6 +1,11 @@
 # helper functions
+_is_command_exist() {
+    return $(command -v "$1" &> /dev/null)
+}
+
+# args: alias_name, script_path
 _create_alias_script() {
-    if [[ -z "$1" || -z "$2" ]]; then
+    if [[ $# -lt 2 ]]; then
         >&2 echo "$FUNCNAME failed: not enough arguments '$@'"
         return 1
     fi
@@ -17,8 +22,9 @@ _create_alias_script() {
     fi
 }
 
+# args: alias_name, test_command, command
 _create_alias_command() {
-    if [[ -z "$1" || -z "$2" || -z "$3" ]]; then
+    if [[ $# -lt 3 ]]; then
         >&2 echo "$FUNCNAME failed: not enough arguments '$@'"
         return 1
     fi
@@ -27,12 +33,28 @@ _create_alias_command() {
     local test_command="$2"
     local command="$3"
 
-    if which "$test_command" &> /dev/null; then
+    if _is_command_exist "$test_command"; then
         alias "$alias_name"="$command"
         return 0
     else
         >&2 echo "$FUNCNAME failed: '$test_command' is not found"
         return 1
+    fi
+}
+
+# args: alias_name, test_command, command
+_create_alias_command_if() {
+    if [[ $# -lt 3 ]]; then
+        >&2 echo "$FUNCNAME failed: not enough arguments '$@'"
+        return 1
+    fi
+
+    local alias_name="$1"
+    local test_command="$2"
+    local command="$3"
+
+    if _is_command_exist "$test_command"; then
+        alias "$alias_name"="$command"
     fi
 }
 
@@ -155,15 +177,13 @@ _create_alias_command nvim-old nvim 'nvim -u ~/.config/nvim/init.vim.bak'
 _create_alias_command nvim-minimal nvim 'nvim --cmd "let g:init_minimal = v:true"'
 
 # aliases nvimdiff (idk why it didn't shipped with nvim package)
-if ! which nvimdiff &> /dev/null; then
-    _create_alias_command nvimdiff nvim 'nvim-minimal -d'
-fi
+_create_alias_command_if nvimdiff nvim 'nvim-minimal -d'
 
 # aliases nvim that opens :DiffviewOpen
 _create_alias_command nvim-diffview nvim 'nvim-minimal -c DiffviewOpen'
 
 # why discord capitalize its name?
-_create_alias_command discord Discord Discord
+_create_alias_command_if discord Discord Discord
 
 # g++ with -std=c++20
 _create_alias_command g++20 g++ 'g++ -std=c++20'
@@ -193,7 +213,7 @@ _xxd_color_with_pager() {
 _create_alias_command xxd xxd _xxd_color_with_pager
 
 # alias to wshowkeys with customization for easier access
-_create_alias_command display_keys wshowkeys 'wshowkeys -a bottom -a right -F "JetBrainsMono Nerd Font Ultra-Bold 30" -b "#1E203080" -f "#E8EFFF"'
+_create_alias_command display_keys wshowkeys 'wshowkeys -F "JetBrainsMono Nerd Font Ultra-Bold 30" -b "#1E203080" -f "#E8EFFF"'
 
 
 #-----------------------------[ script aliases ]--------------------------------
