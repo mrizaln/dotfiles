@@ -28,6 +28,10 @@ browser = /usr/bin/firefox -new-tab
 always_run_script = true
 title = Dunst
 class = Dunst
+dmenu = "/usr/bin/wofi --show=dmenu -p dunst"
+mouse_left_click = context
+mouse_right_click = close_current
+mouse_middle_click = close_all
 
 # [shortcuts]
 # close = ctrl+space

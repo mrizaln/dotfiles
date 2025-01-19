@@ -1,4 +1,12 @@
-import = ["/home/mrizaln/.config/alacritty/themes/monokai-pro/monokai-pro-alacritty.toml"]
+[general]
+# import = ["/home/mrizaln/.config/alacritty/themes/monokai-pro/monokai-pro-alacritty.toml"]
+# import = ["/home/mrizaln/.config/alacritty/themes/alacritty-theme/themes/flat_remix.toml"]
+import = ["/home/mrizaln/.config/alacritty/themes/alacritty-theme/themes/iterm.toml"]
+# import = ["/home/mrizaln/.config/alacritty/themes/alacritty-theme/themes/monokai.toml"]
+
+# overrides theme
+[colors.primary]
+background = '#1e2030'
 
 
 [env]

@@ -17,16 +17,20 @@
 [core]
     editor = nvim
     pager = delta
+    syntaxTheme = "DarkNeon"
 
 [interactive]
     diffFilter = delta --color-only
 
 [delta]
     navigate = true
-    light = false
+    ; light = false
 
 [merge]
     conflictstyle = diff3
 
 [diff]
     colorMoved = default
+
+[pull]
+    ; rebase = true

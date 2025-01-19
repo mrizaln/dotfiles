@@ -57,12 +57,16 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 __parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    if ! command -v git &> /dev/null; then
+        echo "<install git>"
+    else
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    fi
 }
 
 __build_prompt() {
     local exit_status="$?"
-    PS1="[$exit_status]-\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[33m\]\$(__parse_git_branch)\[\033[00m\]\$ "
+    PS1="[$exit_status]-\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\[\033[33m\]\$(__parse_git_branch)\[\033[00m\]\$ "
 }
 
 if [ "$color_prompt" = yes ]; then
@@ -129,10 +133,10 @@ f() {
 # export SDKMAN_DIR="$HOME/.sdkman"
 # [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-# set tab size to 4
-tabs 4
-
 # load brew
 if command -v brew &> /dev/null; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+# set tab size to 4
+tabs 4

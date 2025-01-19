@@ -63,7 +63,7 @@ _create_alias_command_if() {
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls --color=auto --group-directories-first'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -73,18 +73,18 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls aliases
-alias lla='ls -vhalF'
-alias ll='ls -vhlF'
-alias la='ls -vhAF'
-alias l='ls -vhCF'
+alias lla='ls -vhalF --group-directories-first'
+alias ll='ls -vhlF --group-directories-first'
+alias la='ls -vhAF --group-directories-first'
+alias l='ls -vhCF --group-directories-first'
 
-alias lh='ls -vhdF .?*'       # list only hidden files
-alias llh='ls -vhdFl .?*'     # list only hidden files with details
-alias lsd='ls -vd */'
+alias lh='ls -vhdF --group-directories-first .?*'       # list only hidden files
+alias llh='ls -vhdFl --group-directories-first .?*'     # list only hidden files with details
+alias lsd='ls -vd --group-directories-first */'
 
 # list symbolic links
 _list_symlinks() {
-    ls -lahF "$@" --color=always              \
+    ls -lahF --group-directories-first "$@" --color=always              \
         | grep "\->"                          \
         | tr -s " "                           \
         | cut -d\  -f9-                       \
@@ -147,8 +147,19 @@ alias print_path='echo -e "${PATH//:/\\n}" | sort'
 
 
 #-----------------------------[ command aliases ]-------------------------------
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
+# shadow dnf alias with dnf5
+if [[ -L /usr/bin/dnf && $(readlink /usr/bin/dnf | xargs basename) != "dnf5" ]];then
+    echo "Your dnf symlink is not set to dnf5: $(readlink /usr/bin/dnf). Shadowing it by alias..."
+    _create_alias_command dnf dnf5 dnf5
+elif ! [[ -L /usr/bin/dnf ]]; then
+    echo "You seem to not have dnf symlink, your distro might have problems in the future. Creating dnf5 alias..."
+    _create_alias_command dnf dnf5 dnf5
+fi
+
+# make aliases available when using sudo: https://askubuntu.com/a/22043
+_create_alias_command sudo sudo 'sudo '
+
+# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
 _create_alias_command alert notify-send 'notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # make reboot command interactive
@@ -185,9 +196,6 @@ _create_alias_command nvim-diffview nvim 'nvim-minimal -c DiffviewOpen'
 # why discord capitalize its name?
 _create_alias_command_if discord Discord Discord
 
-# g++ with -std=c++20
-_create_alias_command g++20 g++ 'g++ -std=c++20'
-
 # lazygit
 _create_alias_command lgit lazygit lazygit
 
@@ -205,7 +213,7 @@ _create_alias_command rgd rg _rgd_impl
 
 # ffmpeg alias for nvidia gpu acceleration using nvenc
 # _create_alias_command ffmpeg_nvenc ffmpeg 'ffmpeg -hwaccel cuda -hwaccel_output_format cuda -c:v h264_nvenc -preset slow -rc vbr_hq -cq 19 -b:v 0 -c:a aac -b:a 128k -ac 2 -f mp4'
-_create_alias_command ffmpeg_nvenc ffmpeg 'ffmpeg -hwaccel cuda -hwaccel_output_format cuda -c:a copy -vcodec hevc_nvenc -preset p1 -c:s copy -y'
+_create_alias_command ffmpeg_nvenc ffmpeg 'ffmpeg -hwaccel cuda -hwaccel_output_format cuda -c:v h264_nvenc -preset slow'
 
 _xxd_color_with_pager() {
     xxd -R always "$@" | less -F -R
