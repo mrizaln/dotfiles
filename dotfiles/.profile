@@ -73,14 +73,14 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 # use nvim as editor
 if command -v nvim &> /dev/null; then
     export VISUAL=nvim
-    export EDITOR="$VISUAL"
 elif command -v vim &> /dev/null; then
     export VISUAL=vim
-    export EDITOR="$VISUAL"
 else
     export VISUAL=vi
-    export EDITOR="$VISUAL"
 fi
+
+export EDITOR="$VISUAL"
+export SYSTEMD_EDITOR="$VISUAL"
 
 # set JAVA_HOME
 # export JAVA_HOME=/home/mrizaln/.sdkman/candidates/java/current
@@ -107,3 +107,6 @@ export CMAKE_COLOR_DIAGNOSTICS=1
 GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
+
+# use nvim as man pager
+export MANPAGER='nvim --cmd "let g:startup_man_view = v:true" +Man!'
