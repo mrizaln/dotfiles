@@ -1,4 +1,16 @@
-# helper functions
+#-----------------------------[ helper functions ]------------------------------
+# check if uint
+_is_uint() { [[ $1 =~ ^[0-9]+$ ]] }
+
+# check if int
+_is_int() { [[ $1 =~ ^[+-]?[0-9]+$ ]] ;}
+
+# echo to stderr instead of stdout
+_echoerr() {
+    echo "$@" 1>&2;
+}
+
+# check if command exist
 _is_command_exist() {
     return $(command -v "$1" &> /dev/null)
 }
@@ -6,7 +18,7 @@ _is_command_exist() {
 # args: alias_name, script_path
 _create_alias_script() {
     if [[ $# -lt 2 ]]; then
-        >&2 echo "$FUNCNAME failed: not enough arguments '$@'"
+        _echoerr "$FUNCNAME failed: not enough arguments '$@'"
         return 1
     fi
 
@@ -17,7 +29,7 @@ _create_alias_script() {
         alias "$alias_name"="$script_path"
         return 0
     else
-        >&2 echo "$FUNCNAME failed: '$script_path' is not executable"
+        _echoerr "$FUNCNAME failed: '$script_path' is not executable"
         return 1
     fi
 }
@@ -25,7 +37,7 @@ _create_alias_script() {
 # args: alias_name, test_command, command
 _create_alias_command() {
     if [[ $# -lt 3 ]]; then
-        >&2 echo "$FUNCNAME failed: not enough arguments '$@'"
+        _echoerr "$FUNCNAME failed: not enough arguments '$@'"
         return 1
     fi
 
@@ -37,7 +49,7 @@ _create_alias_command() {
         alias "$alias_name"="$command"
         return 0
     else
-        >&2 echo "$FUNCNAME failed: '$test_command' is not found"
+        _echoerr "$FUNCNAME failed: '$test_command' is not found"
         return 1
     fi
 }
@@ -45,7 +57,7 @@ _create_alias_command() {
 # args: alias_name, test_command, command
 _create_alias_command_if() {
     if [[ $# -lt 3 ]]; then
-        >&2 echo "$FUNCNAME failed: not enough arguments '$@'"
+        _echoerr "$FUNCNAME failed: not enough arguments '$@'"
         return 1
     fi
 
@@ -137,7 +149,6 @@ alias du='du -h'
 
 # run these program in interactive mode
 alias mv="mv -i"
-alias rm="rm -I"
 
 # aliasing du to print in sorted-human-readable format
 alias du_sorted='du -hd1 | sort -h'
@@ -145,6 +156,23 @@ alias du_sorted='du -hd1 | sort -h'
 # print PATHs
 alias print_path='echo -e "${PATH//:/\\n}" | sort'
 
+# alias rm to be always interactive (confirmation only done once :D)
+_rm_should_interactive() {
+    if [[ "$#" -eq 0 ]]; then
+        rm
+        return 1;
+    fi;
+
+    _echoerr "Consider using trash (from trash-cli) instead"
+    read -p "Are you sure (t = use trash)? [y/N/t] " choice
+
+    case "$choice" in
+        "y"|"Y") rm "$@" ;;
+        "t"|"T") trash-put "$@" ;;
+        *) return 1 ;;
+    esac
+}
+alias rm=_rm_should_interactive
 
 #-----------------------------[ command aliases ]-------------------------------
 # shadow dnf alias with dnf5
@@ -156,6 +184,9 @@ elif ! [[ -L /usr/bin/dnf ]]; then
     _create_alias_command dnf dnf5 dnf5
 fi
 
+# make alias for dnf --cacheonly
+_create_alias_command dnfc dnf 'dnf --cacheonly'
+
 # make aliases available when using sudo: https://askubuntu.com/a/22043
 _create_alias_command sudo sudo 'sudo '
 
@@ -165,17 +196,14 @@ _create_alias_command alert notify-send 'notify-send --urgency=low -i "$([ $? = 
 # make reboot command interactive
 _create_alias_command reboot reboot 'echo "are you sure? [y/n]" && read x && [ "$x" = "y" ] && reboot'
 
-# make powertop to run as root priviledge on default
-_create_alias_command powertop powertop 'sudo powertop'
-
 # convert .doc .docx .ppt .pptx .pps .ppsx into .pdf file using libreoffice
 _create_alias_command libreoffice_conv libreoffice 'libreoffice --headless --convert-to pdf'
 
 # htop but gpu
 _create_alias_command gtop nvidia-smi 'watch -n 1 nvidia-smi'
 
-# aliasing feh to open in certain geometry and other control
-_create_alias_command fehh feh 'feh -g 960x540 -d --scale-down --start-at'
+# # aliasing feh to open in certain geometry and other control
+# _create_alias_command fehh feh 'feh -g 960x540 -d --scale-down --start-at'
 
 # alias for easier access to vi config
 _create_alias_command nvim-config vi 'vi ~/.config/nvim/init.lua'
@@ -185,7 +213,7 @@ _create_alias_command nvim-old nvim 'nvim -u ~/.config/nvim/init.vim.bak'
 
 # openg nvim using a minimal configuration
 # _create_alias_command nvim-minimal nvim 'nvim -u ~/.config/nvim/init.vim.minimal'
-_create_alias_command nvim-minimal nvim 'nvim --cmd "let g:init_minimal = v:true"'
+_create_alias_command nvim-minimal nvim 'nvim --cmd "let g:startup_minimal_mode = v:true"'
 
 # aliases nvimdiff (idk why it didn't shipped with nvim package)
 _create_alias_command_if nvimdiff nvim 'nvim-minimal -d'
@@ -223,6 +251,9 @@ _create_alias_command xxd xxd _xxd_color_with_pager
 # alias to wshowkeys with customization for easier access
 _create_alias_command display_keys wshowkeys 'wshowkeys -F "JetBrainsMono Nerd Font Ultra-Bold 30" -b "#1E203080" -f "#E8EFFF"'
 
+_create_alias_command tree tree 'tree --filesfirst'
+
+_create_alias_command_if qoiview qoiview 'qoiview -W 1280 -H 720'
 
 #-----------------------------[ script aliases ]--------------------------------
 # use mv_ln instead of mv
@@ -250,7 +281,18 @@ _nvidia_run_completion() {
 }
 
 alias nvidia_run=_nvidia_run_impl
-complete -F _nvidia_run_completion nvidia_run
+complete -o default nvidia_run
+
+_read_rpath_impl()
+{
+    for path in "$@"; do
+        echo "$path:"
+        objdump -x "$path" | grep 'R.*PATH'
+    done
+}
+
+alias read_rpath=_read_rpath_impl
+complete -o default read_rpath
 
 # alias 'npx tsc' for easier call and similar to when call 'node'
 _node_run_ts()
@@ -269,7 +311,7 @@ _node_run_ts()
 
     node "$js_file"
 }
-alias nodet="_node_run_ts"
+alias nodet=_node_run_ts
 
 # # alising time(1) because more than one program exist with the same name
 # alias timee="$(which time) -f '\t%E real,\t%U user,\t%S sys,\t%K amem,\t%M mmem'"
